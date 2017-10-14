@@ -1,0 +1,121 @@
+.NewIR {
+    margin-top: 80px;
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+.NewIR h2 {
+    color: #0c275d;
+}
+
+.NewIR p {
+    font: normal normal normal 15px/1.4em din-next-w01-light,din-next-w02-light,din-next-w10-light,sans-serif;
+    color: #333333;
+    text-align: left;
+    margin: 0;
+}
+
+.NewIR .add-info {
+    color: #999;
+}
+
+.NewIR .bot-connect {
+    text-decoration: underline;
+}
+
+.NewIR .login-btn,
+.NewIR .restore-btn {
+    float: none;
+}
+
+.NewIR .restore-btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 20px 0;
+}
+.NewIR .restore-btn:hover {
+    text-decoration: underline;
+}
+
+.NewIR input,
+.NewIR textarea,
+.NewIR select {
+    width: 100%;
+    margin: 10px 0 30px;
+    border: 1px solid #E0E0E0;
+    background-color: #ffffff;
+    border-radius: 4px;
+    padding: 15px 40px 15px 20px;
+    font-size: 14px;
+    line-height: 1;
+    resize: none;
+}
+
+.NewIR input[type=date] {
+    padding: 15px 10px 15px 10px;
+}
+
+.NewIR select {
+    -webkit-appearance: none;
+    background-size: 2%;
+}
+
+.NewIR textarea {
+    padding: 20px 20px 40px;
+}
+
+.command {
+    padding: 4px;
+    background-color: #F2994A;
+    color: #ffffff;
+    border-radius: 4px;
+}
+
+.NewIR .title {
+    margin: 20px auto;
+    text-align: left;
+}
+.NewIR .subtitle {
+    margin: -10px 0 20px;
+}
+
+.NewIR .table-row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.NewIR .row-title span {
+    font-size: 18px;
+    font-style: italic;
+}
+
+.NewIR .row-column input {
+    margin: 5px 0 20px;
+}
+
+.IR-form button[type=submit] {
+    margin-top: 10px;
+}
+
+@media (max-width: 991px) {
+
+    .NewIR select {
+        background-size: 3%;
+    }
+
+}
+@media (max-width: 767px) {
+
+    .NewIR select {
+        background-size: 4%;
+    }
+
+}
+@media (max-width: 575px) {
+
+    .NewIR select {
+        background-size: 7%;
+    }
+
+}

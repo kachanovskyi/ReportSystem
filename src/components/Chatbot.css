@@ -1,0 +1,102 @@
+.chatbot {
+    display: inline-block;
+    padding: 20px 10px 0;
+    width: 100%;
+}
+.chatbot .inner,
+.chatbot.add-new .bot-connect {
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    border-radius: 4px;
+    position: relative;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.chatbot.add-new {
+    padding: 0 10px;
+}
+
+.chatbot .inner .bot-img {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+    color: #ffffff;
+}
+
+.chatbot .inner .bot-info {
+    display: inline-block;
+    vertical-align: middle;
+    width: calc(100% - 20px - 52px);
+}
+
+.chatbot .inner .bot-info p {
+    margin: 0 0 5px;
+    line-height: 140%;
+}
+
+.chatbot .inner .bot-name {
+    color: #333333;
+    display: inline-block;
+}
+
+.chatbot .inner .settings-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 14px;
+}
+
+.chatbot .inner .settings-icon:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+.chatbot .inner .settings-icon:active {
+    opacity: 1 !important;
+}
+
+.chatbot.add-new .bot-connect {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F2994A;
+}
+.chatbot.add-new:hover .bot-connect {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: .1s ease-in-out;
+}
+
+.chatbot.add-new .bot-connect p {
+    margin: 0;
+    color: #ffffff;
+}
+
+.chatbot .save-btn,
+.chatbot .cancel-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: #2D9CDB;
+    font-size: 14px;
+    line-height: 100%;
+}
+
+.chatbot .cancel-btn {
+    right: 155px;
+}
+
+.chatbot .rename-bot {
+    border: none;
+    height: 28px;
+    font-size: 14px;
+}
+.chatbot .rename-bot:focus {
+    outline: none;
+}
+

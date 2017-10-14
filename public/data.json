@@ -1,0 +1,87 @@
+{
+  "id": 3,
+  "create_date": "2017-10-11",
+  "scientific_research": [
+    {
+      "id": 31,
+      "value": "research1",
+      "theme_id": 2
+    }
+  ],
+  "participation_in_grant": [
+    {
+      "id": 33,
+      "value": "grant1"
+    }
+  ],
+  "scientific_internship": [
+    {
+      "id": 34,
+      "value": "research"
+    }
+  ],
+  "scientific_management": [
+    {
+      "id": 41,
+      "value": "research"
+    },
+    {
+      "id": 42,
+      "value": "research"
+    }
+  ],
+  "defenses_by_asp_and_doc": [
+    {
+      "id": 36,
+      "value": "research"
+    }
+  ],
+  "students_scientific_management": [
+    {
+      "id": 37,
+      "value": "research"
+    }
+  ],
+  "joint_publication": [
+    {
+      "id": 38,
+      "value": "research"
+    }
+  ],
+  "all_monographs_amount": 2,
+  "monographs_amount": 2,
+  "all_textbooks_amount": 3,
+  "textbooks_amount": 4,
+  "all_tutorials_amount": null,
+  "tutorials_amount": null,
+  "all_articles_amount": null,
+  "articles_amount": null,
+  "all_other_editions_amount": null,
+  "other_editions_amount": null,
+  "all_theses_amount": 1,
+  "theses_amount": null,
+  "all_patents_amount": null,
+  "patents_amount": 1,
+  "monograph_rp": [],
+  "textbook_rp": [],
+  "tutorial_rp": [],
+  "other_edition_rp": [],
+  "article_impactor": [],
+  "article_wss": [],
+  "article_international": [],
+  "article_ukraine": [],
+  "article_ukraine_other": [],
+  "theses_ukraine": [],
+  "theses_international": [],
+  "international_conferences": [],
+  "monograph": [],
+  "textbook": [],
+  "tutorial": [],
+  "other_edition": [],
+  "article": [],
+  "development_application": [],
+  "development_patent": [],
+  "reviews_and_feedback": [],
+  "membership": [],
+  "other_activity": []
+}

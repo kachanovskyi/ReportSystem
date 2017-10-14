@@ -1,0 +1,38 @@
+.Login {
+    height: 100vh;
+    display: table;
+    width: 100%;
+}
+
+.Login .copyright {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+}
+
+.Login .login-form {
+    background-color: transparent;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.login-form p {
+    font: normal normal normal 15px/1.4em din-next-w01-light,din-next-w02-light,din-next-w10-light,sans-serif;
+    color: #605E5E;
+    text-align: left;
+    margin: 0;
+}
+
+.login-form .password-container {
+    position: relative;
+}
+
+.login-form .password-container img {
+    position: absolute;
+    right: 25px;
+    top: 19px;
+    height: 10px;
+    cursor: pointer;
+}
