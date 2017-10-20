@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import {Col} from 'react-bootstrap';
-import {notifyModalShow, getRandomColor} from '../externalFunctions';
+import {ifStringEmpty, ifNotEmptyArray, notifyModalShow, getRandomColor} from '../externalFunctions';
 import {NavLink, withRouter} from 'react-router-dom';
 
 import NotifyModal from './NofityModal';
 import $ from 'jquery';
 
 import './NewIR.css';
+import InputField from "./InputField";
 
 class NewIR extends Component {
 
@@ -27,15 +28,26 @@ class NewIR extends Component {
         this.formSubmitted = this.formSubmitted.bind(this);
         this.loadData = this.loadData.bind(this);
         this.loadScientificManager = this.loadScientificManager.bind(this);
+        this.addItem = this.addItem.bind(this);
     }
 
     componentDidMount() {
         document.getElementById('create_date').valueAsDate = new Date();
         this.loadData();
-    }
 
-    ifNotEmptyArray(arr) {
-        return (arr.length > 0);
+        $('.NewIR textarea').on("blur", function () {
+
+            const content = $(this).val(),
+                plusBtn = $(this).parent().parent().find('.plus-btn');
+
+            if( ifStringEmpty(content) ) {
+                plusBtn.removeClass('pulse');
+                console.log($(this).parent().parent().find('.plus-btn'));
+            } else {
+                plusBtn.addClass('pulse');
+            }
+
+        });
     }
 
 
@@ -45,12 +57,12 @@ class NewIR extends Component {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        fetch('https://23b325de.ngrok.io/report/6', {
-            method: 'GET',
-            headers: myHeaders,
-            credentials: 'same-origin'
-        })
-        // fetch('./data.json')
+        // fetch('https://23b325de.ngrok.io/report/6', {
+        //     method: 'GET',
+        //     headers: myHeaders,
+        //     credentials: 'same-origin'
+        // })
+        fetch('./data.json')
             .then((response) => response.json())
             .then((responseJson) => {
 
@@ -77,7 +89,7 @@ class NewIR extends Component {
 
                     } else if(x === "scientific_research") {
 
-                        if(this.ifNotEmptyArray(responseJson[x])) {
+                        if(ifNotEmptyArray(responseJson[x])) {
                             input.val(responseJson[x][0].value);
 
                             this.setState({
@@ -130,12 +142,12 @@ class NewIR extends Component {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        fetch('https://23b325de.ngrok.io/theme', {
-                method: 'GET',
-                headers: myHeaders,
-                credentials: 'same-origin'
-        })
-        // fetch('./scientificData.json')
+        // fetch('https://23b325de.ngrok.io/theme', {
+        //         method: 'GET',
+        //         headers: myHeaders,
+        //         credentials: 'same-origin'
+        // })
+        fetch('./scientificData.json')
             .then((response) => response.json())
             .then((responseJson) => {
 
@@ -246,6 +258,16 @@ class NewIR extends Component {
         return false;
     };
 
+    addItem({target}) {
+        console.log(target);
+        const $target = $(target);
+        const parent = $target.parent().parent().parent();
+
+        const selectValue = parent.find('select').val();
+
+        console.log($('select option[value="' + selectValue + '"]').text());
+    };
+
     render() {
         return (
             <div className="NewIR">
@@ -255,14 +277,53 @@ class NewIR extends Component {
 
                             <h2 className="title">Науковий доробок</h2>
 
-                            <p>участь у науково-дослідній тематиці кафедри(підрозділу): шифр, назва НДР (науковий керівник)</p>
-                            <select name="theme_select" id="theme_select" style={this.state.dropdownStyle} required>
-                                {this.state.themes}
-                            </select>
+                            {/*<div className="IR-item">*/}
+                                {/*<div className="input-container">*/}
+                                    {/*<p>участь у науково-дослідній тематиці кафедри(підрозділу): шифр, назва НДР (науковий керівник)</p>*/}
+                                    {/*<select name="theme_select" id="theme_select" style={this.state.dropdownStyle} required>*/}
+                                        {/*{this.state.themes}*/}
+                                    {/*</select>*/}
+                                    {/*<textarea name="scientific_research" id="scientific_research" maxLength="1000"*/}
+                                              {/*placeholder="Зміст виконаної роботи (до 1000 знаків)"/>*/}
+                                {/*</div>*/}
+                                {/*<div>*/}
+                                    {/*<div className="plus-btn" onClick={this.addItem}>*/}
+                                        {/*<img src="images/plus.png"/>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                            {/*</div>*/}
 
-                            <p>зміст виконаної роботи</p>
-                            <p className="add-info">до 1000 знаків</p>
-                            <textarea name="scientific_research" id="scientific_research" maxLength="1000" placeholder="Заповніть дане поле..."/>
+                            <InputField id="scientific_research" themes={this.state.themes}
+                                        info="111участь у науково-дослідній тематиці кафедри(підрозділу): шифр, назва НДР (науковий керівник)"/>
+
+                            <InputField id="participation_in_grant"
+                                        info="участь у виконанні індивідуальних або колективних грантів" addInfo="окрім грантів на поїздки"/>
+
+                            {/*<div className="IR-item">*/}
+                                {/*<div className="input-container">*/}
+                                    {/*<p>участь у виконанні індивідуальних або колективних грантів</p>*/}
+                                    {/*<p className="add-info">окрім грантів на поїздки</p>*/}
+                                    {/*<textarea name="participation_in_grant" id="participation_in_grant" placeholder="Заповніть дане поле..."/>*/}
+                                {/*</div>*/}
+                                {/*<div>*/}
+                                    {/*<div className="plus-btn">*/}
+                                        {/*<img src="images/plus.png"/>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                            {/*</div>*/}
+
+                            {/*<div className="IR-item">*/}
+                                {/*<div className="input-container">*/}
+                                    {/*<p>участь у виконанні індивідуальних або колективних грантів</p>*/}
+                                    {/*<p className="add-info">окрім грантів на поїздки</p>*/}
+                                    {/*<textarea name="participation_in_grant" id="participation_in_grant" placeholder="Заповніть дане поле..."/>*/}
+                                {/*</div>*/}
+                                {/*<div>*/}
+                                    {/*<div className="plus-btn">*/}
+                                        {/*<img src="images/plus.png"/>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                            {/*</div>*/}
 
                             <p>участь у виконанні індивідуальних або колективних грантів</p>
                             <p className="add-info">окрім грантів на поїздки</p>

@@ -80,3 +80,7 @@ export const getTextColor = (hex) => {
 export const ifStringEmpty = (text) => {
     return (text.length === 0 && !text.trim());
 };
+
+export const ifNotEmptyArray = (arr) => {
+    return (arr.length > 0);
+};
