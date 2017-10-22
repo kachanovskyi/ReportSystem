@@ -9,14 +9,16 @@ import NotifyModal from './NofityModal';
 import $ from 'jquery';
 
 import './NewIR.css';
+
 import InputField from "./InputField";
+import InputTableRow from "./InputTableRow";
 
 class NewIR extends Component {
 
     constructor() {
         super();
         this.state = {
-            theme_id: 1,
+            theme_id: [],
             themes: [],
             data: {},
             dropdownStyle: {
@@ -28,26 +30,10 @@ class NewIR extends Component {
         this.formSubmitted = this.formSubmitted.bind(this);
         this.loadData = this.loadData.bind(this);
         this.loadScientificManager = this.loadScientificManager.bind(this);
-        this.addItem = this.addItem.bind(this);
     }
 
     componentDidMount() {
-        document.getElementById('create_date').valueAsDate = new Date();
         this.loadData();
-
-        $('.NewIR textarea').on("blur", function () {
-
-            const content = $(this).val(),
-                plusBtn = $(this).parent().parent().find('.plus-btn');
-
-            if( ifStringEmpty(content) ) {
-                plusBtn.removeClass('pulse');
-                console.log($(this).parent().parent().find('.plus-btn'));
-            } else {
-                plusBtn.addClass('pulse');
-            }
-
-        });
     }
 
 
@@ -68,18 +54,13 @@ class NewIR extends Component {
 
                 this.loadScientificManager();
 
-                // console.log(responseJson);
-
                 for(let x in responseJson) {
 
                     let input = $(`#${x}`);
 
                     data[x] = responseJson[x];
 
-                    // console.log(x);
-
                     if(x.includes("amount") ) {
-
 
                         let val = responseJson[x];
 
@@ -91,9 +72,15 @@ class NewIR extends Component {
 
                         if(ifNotEmptyArray(responseJson[x])) {
                             input.val(responseJson[x][0].value);
+                            
+                            const theme_ids = [];
+                            
+                            responseJson[x].forEach(function (item) {
+                                theme_ids.push(item.theme_id);
+                            });
 
                             this.setState({
-                                theme_id: responseJson[x][0].theme_id
+                                theme_id: theme_ids
                             });
                         }
 
@@ -105,29 +92,17 @@ class NewIR extends Component {
 
                     } else if(x !== "id"){
 
-                        // console.log(x);
-                        // console.log(responseJson[x]);
-                        // console.log(responseJson[x][0]);
-                        // console.log(x, 1);
-
                         if(responseJson[x].length > 0) {
-                            // console.log(x, 111);
                             input.val(responseJson[x][0].value);
                         }
 
                     }
 
-                    // $("textarea[name=" + x + "]").val(responseJson[x][0].value);
-                    // console.log();
                 }
-
-                console.log(data);
 
                 this.setState({
                     data
                 });
-
-                console.log(this.state.data);
 
             })
             .catch((error) => {
@@ -163,7 +138,10 @@ class NewIR extends Component {
 
                 self.setState({themes: themes});
 
-                $('#theme_select').val(self.state.theme_id);
+                $('.theme_select').each(function (index) {
+                    $(this).val(self.state.theme_id[index]);
+                    // console.log(self.state.theme_id[index]);
+                });
 
             })
             .catch((error) => {
@@ -258,16 +236,6 @@ class NewIR extends Component {
         return false;
     };
 
-    addItem({target}) {
-        console.log(target);
-        const $target = $(target);
-        const parent = $target.parent().parent().parent();
-
-        const selectValue = parent.find('select').val();
-
-        console.log($('select option[value="' + selectValue + '"]').text());
-    };
-
     render() {
         return (
             <div className="NewIR">
@@ -294,162 +262,46 @@ class NewIR extends Component {
                             {/*</div>*/}
 
                             <InputField id="scientific_research" themes={this.state.themes}
-                                        info="111участь у науково-дослідній тематиці кафедри(підрозділу): шифр, назва НДР (науковий керівник)"/>
+                                        info="участь у науково-дослідній тематиці кафедри(підрозділу): шифр, назва НДР (науковий керівник)"/>
 
                             <InputField id="participation_in_grant"
                                         info="участь у виконанні індивідуальних або колективних грантів" addInfo="окрім грантів на поїздки"/>
 
-                            {/*<div className="IR-item">*/}
-                                {/*<div className="input-container">*/}
-                                    {/*<p>участь у виконанні індивідуальних або колективних грантів</p>*/}
-                                    {/*<p className="add-info">окрім грантів на поїздки</p>*/}
-                                    {/*<textarea name="participation_in_grant" id="participation_in_grant" placeholder="Заповніть дане поле..."/>*/}
-                                {/*</div>*/}
-                                {/*<div>*/}
-                                    {/*<div className="plus-btn">*/}
-                                        {/*<img src="images/plus.png"/>*/}
-                                    {/*</div>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
+                            <InputField id="scientific_internship" info="наукові стажування"/>
 
-                            {/*<div className="IR-item">*/}
-                                {/*<div className="input-container">*/}
-                                    {/*<p>участь у виконанні індивідуальних або колективних грантів</p>*/}
-                                    {/*<p className="add-info">окрім грантів на поїздки</p>*/}
-                                    {/*<textarea name="participation_in_grant" id="participation_in_grant" placeholder="Заповніть дане поле..."/>*/}
-                                {/*</div>*/}
-                                {/*<div>*/}
-                                    {/*<div className="plus-btn">*/}
-                                        {/*<img src="images/plus.png"/>*/}
-                                    {/*</div>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
+                            <InputField id="scientific_management"
+                                        info="наукове керівництво аспірантами, здобувачами, наукове консультування при написанні докторських консультацій"/>
 
-                            <p>участь у виконанні індивідуальних або колективних грантів</p>
-                            <p className="add-info">окрім грантів на поїздки</p>
-                            <textarea name="participation_in_grant" id="participation_in_grant" placeholder="Заповніть дане поле..."/>
+                            <InputField id="defenses_by_asp_and_doc"
+                                        info="захист дисертацій аспірантами, докторантами"
+                                        addInfo="прізвище, назва дисертації, спеціальність, дата захисту, рік закінчення аспірантури, докторантури"/>
 
-                            <p>наукові стажування</p>
-                            <textarea name="scientific_internship" id="scientific_internship" placeholder="Заповніть дане поле..."/>
+                            <InputField id="students_scientific_management"
+                                        info="керівництво студентською науковою роботою, керівництво студентськими гуртками, підготовка студентів для участі у
+                                Всеукраїнських конкурсах студентських наукових робіт тощо"/>
 
-                            <p>наукове керівництво аспірантами, здобувачами, наукове консультування при написанні докторських консультацій</p>
-                            <textarea name="scientific_management" id="scientific_management" placeholder="Заповніть дане поле..."/>
-
-                            <p>захист дисертацій аспірантами, докторантами</p>
-                            <p className="add-info">прізвище, назва дисертації, спеціальність, дата захисту, рік закінчення аспірантури, докторантури</p>
-                            <textarea name="defenses_by_asp_and_doc" id="defenses_by_asp_and_doc" placeholder="Заповніть дане поле..."/>
-
-                            <p>
-                                керівництво студентською науковою роботою, керівництво студентськими гуртками, підготовка студентів для участі у
-                                Всеукраїнських конкурсах студентських наукових робіт тощо
-                            </p>
-                            <textarea name="students_scientific_management" id="students_scientific_management" placeholder="Заповніть дане поле..."/>
-
-                            <p>
-                                спільні публікації зі студентами
-                            </p>
-                            <textarea name="joint_publication" id="joint_publication" placeholder="Заповніть дане поле..."/>
+                            <InputField id="joint_publication"
+                                        info="спільні публікації зі студентами"/>
 
 
                             <h2 className="title">Публікації</h2>
 
-                            <div className="row table-row">
-                                <Col xs={4} md={6} className="row-title">
-                                    <span>Монографії</span>
-                                </Col>
-                                <Col xs={4} md={3} className="row-column">
-                                    <span>Всього</span>
-                                    <input type="text" name="all_monographs_amount" id="all_monographs_amount" placeholder="Введіть число..."/>
-                                </Col>
-                                <Col xs={4} md={3} className="row-column">
-                                    <span>За звітний період</span>
-                                    <input type="text" name="monographs_amount" id="monographs_amount" placeholder="Введіть число..."/>
-                                </Col>
-                            </div>
+                            <InputField id="joint_publication"
+                                        info="спільні публікації зі студентами"/>
 
-                            <div className="row table-row">
-                                <Col xs={4} md={6} className="row-title">
-                                    <span>Підручники</span>
-                                </Col>
-                                <Col xs={4} md={3} className="row-column">
-                                    <span>Всього</span>
-                                    <input type="text" name="all_textbooks_amount" id="all_textbooks_amount" placeholder="Введіть число..."/>
-                                </Col>
-                                <Col xs={4} md={3} className="row-column">
-                                    <span>За звітний період</span>
-                                    <input type="text" name="textbooks_amount" id="textbooks_amount" placeholder="Введіть число..."/>
-                                </Col>
-                            </div>
+                            <InputTableRow title="Монографії" firstId="all_monographs_amount" secondId="monographs_amount"/>
 
-                            <div className="row table-row">
-                                <Col xs={4} md={6} className="row-title">
-                                    <span>Навчальні посібники</span>
-                                </Col>
-                                <Col xs={4} md={3} className="row-column">
-                                    <span>Всього</span>
-                                    <input type="text" name="all_tutorials_amount" id="all_tutorials_amount" placeholder="Введіть число..."/>
-                                </Col>
-                                <Col xs={4} md={3} className="row-column">
-                                    <span>За звітний період</span>
-                                    <input type="text" name="tutorials_amount" id="tutorials_amount" placeholder="Введіть число..."/>
-                                </Col>
-                            </div>
+                            <InputTableRow title="Підручники" firstId="all_textbooks_amount" secondId="textbooks_amount"/>
 
-                            <div className="row table-row">
-                                <Col xs={4} md={6} className="row-title">
-                                    <span>Статті</span>
-                                </Col>
-                                <Col xs={4} md={3} className="row-column">
-                                    <span>Всього</span>
-                                    <input type="text" name="all_articles_amount" id="all_articles_amount" placeholder="Введіть число..."/>
-                                </Col>
-                                <Col xs={4} md={3} className="row-column">
-                                    <span>За звітний період</span>
-                                    <input type="text" name="articles_amount" id="articles_amount" placeholder="Введіть число..."/>
-                                </Col>
-                            </div>
+                            <InputTableRow title="Навчальні посібники" firstId="all_tutorials_amount" secondId="tutorials_amount"/>
 
-                            <div className="row table-row">
-                                <Col xs={4} md={6} className="row-title">
-                                    <span>Інші наукові видання</span>
-                                </Col>
-                                <Col xs={4} md={3} className="row-column">
-                                    <span>Всього</span>
-                                    <input type="text" name="all_other_editions_amount" id="all_other_editions_amount" placeholder="Введіть число..."/>
-                                </Col>
-                                <Col xs={4} md={3} className="row-column">
-                                    <span>За звітний період</span>
-                                    <input type="text" name="other_editions_amount" id="other_editions_amount" placeholder="Введіть число..."/>
-                                </Col>
-                            </div>
+                            <InputTableRow title="Статті" firstId="all_articles_amount" secondId="articles_amount"/>
 
-                            <div className="row table-row">
-                                <Col xs={4} md={6} className="row-title">
-                                    <span>Тези доповідей на конференціях</span>
-                                </Col>
-                                <Col xs={4} md={3} className="row-column">
-                                    <span>Всього</span>
-                                    <input type="text" name="all_theses_amount" id="all_theses_amount" placeholder="Введіть число..."/>
-                                </Col>
-                                <Col xs={4} md={3} className="row-column">
-                                    <span>За звітний період</span>
-                                    <input type="text" name="theses_amount" id="theses_amount" placeholder="Введіть число..."/>
-                                </Col>
-                            </div>
+                            <InputTableRow title="Інші наукові видання" firstId="all_other_editions_amount" secondId="other_editions_amount"/>
 
-                            <div className="row table-row">
-                                <Col xs={4} md={6} className="row-title">
-                                    <span>Патенти</span>
-                                </Col>
-                                <Col xs={4} md={3} className="row-column">
-                                    <span>Всього</span>
-                                    <input type="text" name="all_patents_amount" id="all_patents_amount" placeholder="Введіть число..."/>
-                                </Col>
-                                <Col xs={4} md={3} className="row-column">
-                                    <span>За звітний період</span>
-                                    <input type="text" name="patents_amount" id="patents_amount" placeholder="Введіть число..."/>
-                                </Col>
-                            </div>
+                            <InputTableRow title="Тези доповідей на конференціях" firstId="all_theses_amount" secondId="theses_amount"/>
+
+                            <InputTableRow title="Патенти" firstId="all_patents_amount" secondId="patents_amount"/>
 
 
                             <h2 className="title">Праці, що вийшли з друку за звітний період</h2>
@@ -457,111 +309,74 @@ class NewIR extends Component {
                                 бібліографічний опис згідно з державним стандартом
                             </p>
 
-                            <p>монографії</p>
-                            <textarea name="monograph_rp" id="monograph_rp" placeholder="Заповніть дане поле..."/>
+                            <InputField id="monograph_rp" info="монографії"/>
 
-                            <p>підручники</p>
-                            <textarea name="textbook_rp" id="textbook_rp" placeholder="Заповніть дане поле..."/>
+                            <InputField id="textbook_rp" info="підручники"/>
 
-                            <p>навчальні посібники</p>
-                            <textarea name="tutorial_rp" id="tutorial_rp" placeholder="Заповніть дане поле..."/>
+                            <InputField id="tutorial_rp" info="навчальні посібники"/>
 
-                            <p>інші наукові видання</p>
-                            <p className="add-info">словники, переклади наукових праць, наукові коментарі6 бібліографічні покажчики тощо</p>
-                            <textarea name="other_edition_rp" id="other_edition_rp" placeholder="Заповніть дане поле..."/>
+                            <InputField id="other_edition_rp" info="інші наукові видання"
+                                        addInfo="словники, переклади наукових праць, наукові коментарі6 бібліографічні покажчики тощо"/>
 
-                            <p>статті у виданнях, які мають імпакт-фактор</p>
-                            <textarea name="article_impactor" id="article_impactor" placeholder="Заповніть дане поле..."/>
+                            <InputField id="article_impactor" info="статті у виданнях, які мають імпакт-фактор"/>
 
-                            <p>
-                                статті в інших виданнях, які включені до міжнародних наукометричних баз даних Web of Science, Scopus
-                            </p>
-                            <textarea name="article_wss" id="article_wss" placeholder="Заповніть дане поле..."/>
+                            <InputField id="article_wss"
+                                        info="статті в інших виданнях, які включені до міжнародних наукометричних баз даних Web of Science, Scopus"/>
 
-                            <p>
-                                статті в інших закордонних виданнях
-                            </p>
-                            <textarea name="article_international" id="article_international" placeholder="Заповніть дане поле..."/>
+                            <InputField id="article_international"
+                                        info="статті в інших закордонних виданнях"/>
 
-                            <p>
-                                статті у фахових виданнях України
-                            </p>
-                            <textarea name="article_ukraine" id="article_ukraine" placeholder="Заповніть дане поле..."/>
+                            <InputField id="article_ukraine"
+                                        info="статті у фахових виданнях України"/>
 
-                            <p>
-                                статті в інших виданнях України
-                            </p>
-                            <textarea name="article_ukraine_other" id="article_ukraine_other" placeholder="Заповніть дане поле..."/>
+                            <InputField id="article_ukraine_other"
+                                        info="статті в інших виданнях України"/>
 
-                            <p>
-                                тези доповідей на міжнародних конференціях
-                            </p>
-                            <textarea name="theses_ukraine" id="theses_ukraine" placeholder="Заповніть дане поле..."/>
+                            <InputField id="theses_ukraine"
+                                        info="тези доповідей на міжнародних конференціях"/>
 
-                            <p>
-                                тези доповідей на вітчизняних конференціях
-                            </p>
-                            <textarea name="theses_international" id="theses_international" placeholder="Заповніть дане поле..."/>
+                            <InputField id="theses_international"
+                                        info="тези доповідей на вітчизняних конференціях"/>
 
-                            <p>
-                                перелік міжнародних конференцій за кордоном, на яких представлено результати досліджень
-                            </p>
-                            <textarea name="international_conferences" id="international_conferences" placeholder="Заповніть дане поле..."/>
+                            <InputField id="international_conferences"
+                                        info="перелік міжнародних конференцій за кордоном, на яких представлено результати досліджень"/>
 
 
                             <h2 className="title">Праці, прийняті до друку</h2>
 
-                            <p>монографії</p>
-                            <textarea name="monograph" id="monograph" placeholder="Заповніть дане поле..."/>
+                            <InputField id="monograph" info="монографії"/>
 
-                            <p>підручники</p>
-                            <textarea name="textbook" id="textbook" placeholder="Заповніть дане поле..."/>
+                            <InputField id="textbook" info="підручники"/>
 
-                            <p>навчальні посібники</p>
-                            <textarea name="tutorial" id="tutorial" placeholder="Заповніть дане поле..."/>
+                            <InputField id="tutorial" info="навчальні посібники"/>
 
-                            <p>інші наукові видання</p>
-                            <p className="add-info">словники, переклади наукових праць, наукові коментарі6 бібліографічні покажчики тощо</p>
-                            <textarea name="other_edition" id="other_edition" placeholder="Заповніть дане поле..."/>
+                            <InputField id="other_edition" info="інші наукові видання"
+                                        addInfo="словники, переклади наукових праць, наукові коментарі, бібліографічні покажчики тощо"/>
 
-                            <p>статті</p>
-                            <textarea name="article" id="article" placeholder="Заповніть дане поле..."/>
+                            <InputField id="article" info="статті"/>
 
 
                             <h2 className="title">Патентно-ліцензійна діяльність</h2>
 
-                            <p>заявки на винахід (корисну модель) (на видачу патенту на винахід (корисну модель))</p>
-                            <textarea name="development_application" id="development_application" placeholder="Заповніть дане поле..."/>
+                            <InputField id="development_application"
+                                        info="заявки на винахід (корисну модель) (на видачу патенту на винахід (корисну модель))"/>
 
-                            <p>отримані патенти на винахід (корисну модель)</p>
-                            <textarea name="development_patent" id="development_patent" placeholder="Заповніть дане поле..."/>
+                            <InputField id="development_patent"
+                                        info="отримані патенти на винахід (корисну модель)"/>
 
 
                             <h2 className="title">Інше</h2>
 
-                            <p>рецензування та опанування дисертацій, відгуки на автореферати, експертні висновки</p>
-                            <textarea name="reviews_and_feedback" id="reviews_and_feedback" placeholder="Заповніть дане поле..."/>
+                            <InputField id="reviews_and_feedback"
+                                        info="рецензування та опанування дисертацій, відгуки на автореферати, експертні висновки"/>
 
-                            <p>членство у спеціалізованих вчених, експертних радах, редколегіях наукових журналів тощо</p>
-                            <textarea name="membership" id="membership" placeholder="Заповніть дане поле..."/>
+                            <InputField id="membership"
+                                        info="членство у спеціалізованих вчених, експертних радах, редколегіях наукових журналів тощо"/>
 
-                            <p>інші види діяльності</p>
-                            <textarea name="other_activity" id="other_activity" placeholder="Заповніть дане поле..."/>
+                            <InputField id="other_activity"
+                                        info="інші види діяльності"/>
 
-
-                            <div className="row table-row">
-                                <Col xs={4} className="row-title">
-                                    <span>Звіт заслухано</span>
-                                </Col>
-                                <Col xs={4} className="row-column">
-                                    <span>Дата засідання</span>
-                                    <input type="date" name="create_date" id="create_date"/>
-                                </Col>
-                                <Col xs={4} className="row-column">
-                                    <span>Номер протоколу</span>
-                                    <input type="text" name="protocol" id="protocol" placeholder="Введіть номер..."/>
-                                </Col>
-                            </div>
+                            <InputTableRow title="Звіт заслухано" firstId="create_date" secondId="protocol"/>
 
 
                             <button type="submit" className="login-btn">Submit</button>

@@ -1,0 +1,18 @@
+.NewIR .table-row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.NewIR .row.table-row:first-of-type {
+    padding-top: 20px;
+}
+
+.NewIR .row-title span {
+    font-size: 18px;
+    font-style: italic;
+}
+
+.NewIR .row-column input {
+    margin: 5px 0 20px;
+}

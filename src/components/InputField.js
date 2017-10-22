@@ -28,19 +28,34 @@ class InputField extends Component {
     }
 
     componentDidMount() {
-        if(this.props.id === "create_date") {
-            document.getElementById('create_date').valueAsDate = new Date();
-        }
+
     }
 
     addItem({target}) {
         console.log(target);
         const $target = $(target);
-        const parent = $target.parent().parent().parent();
+        let parent = $target.parent().parent().parent();
 
-        const selectValue = parent.find('select').val();
+        console.log(parent);
 
-        console.log($('select option[value="' + selectValue + '"]').text());
+        console.log(parent.find($('.input-container')).clone());
+
+        if(this.props.id === "scientific_research") {
+
+            parent.find($('.data-input')[0]).clone().appendTo(
+                parent.find($('.input-container'))
+            );
+
+        } else {
+
+            parent = parent.find($('.input-container'));
+            console.log(parent.find('textarea')[0]);
+            parent.append( $(parent.find('textarea')[0]).clone() );
+
+        }
+
+        // const selectValue = parent.find('select').val();
+        // console.log($('select option[value="' + selectValue + '"]').text());
     };
 
     render() {
@@ -48,82 +63,30 @@ class InputField extends Component {
         const info = this.props.info ? <p className="info">{this.props.info}</p> : "";
         const addInfo = this.props.addInfo ? <p className="add-info">{this.props.addInfo}</p> : "";
 
-        let input = <div className="input-container" id={this.props.id}>
+        let input = <div className="input-container">
             {info}
             {addInfo}
             <textarea placeholder="Заповніть дане поле..."/>
         </div>;
 
         if( this.props.id === "scientific_research") {
-            input = <div className="input-container" id={this.props.id}>
+            input = <div className="input-container">
                 {info}
-                <select id="theme_select" style={this.state.dropdownStyle} required>
-                    {this.props.themes}
-                </select>
-                <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)"/>
+                <div className="data-input">
+                    <select className="theme_select" style={this.state.dropdownStyle} required>
+                        {this.props.themes}
+                    </select>
+                    <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)"/>
+                </div>
             </div>;
         }
 
-        if( this.props.id.includes("amount") ) {
-
-            input = <input type="text" id={this.props.id} placeholder="Введіть число..."/>
-
-        } else if( this.props.id === "create_date" ) {
-
-            input = <input type="date" id={this.props.id}/>
-
-        }
-
-        {/*<div>*/}
-        {/*<div className="IR-item">*/}
-        {/*<div className="input-container">*/}
-        {/*<p>участь у науково-дослідній тематиці кафедри(підрозділу): шифр, назва НДР (науковий*/}
-        {/*керівник)</p>*/}
-        {/*<select name="theme_select" id={this.props.id} style={this.state.dropdownStyle} required>*/}
-        {/*{this.state.themes}*/}
-        {/*</select>*/}
-        {/*<textarea name="scientific_research" id="scientific_research" maxLength="1000"*/}
-        {/*placeholder="Зміст виконаної роботи (до 1000 знаків)"/>*/}
-        {/*</div>*/}
-        {/*<div>*/}
-        {/*<div className="plus-btn" onClick={this.addItem}>*/}
-        {/*<img src="images/plus.png"/>*/}
-        {/*</div>*/}
-        {/*</div>*/}
-        {/*</div>*/}
-
-        {/*<div className="IR-item">*/}
-        {/*<div className="input-container">*/}
-        {/*<p>участь у виконанні індивідуальних або колективних грантів</p>*/}
-        {/*<p className="add-info">окрім грантів на поїздки</p>*/}
-        {/*<textarea name="participation_in_grant" id="participation_in_grant"*/}
-        {/*placeholder="Заповніть дане поле..."/>*/}
-        {/*</div>*/}
-        {/*<div>*/}
-        {/*<div className="plus-btn">*/}
-        {/*<img src="images/plus.png"/>*/}
-        {/*</div>*/}
-        {/*</div>*/}
-        {/*</div>*/}
-
-        {/*<Col xs={4} md={3} className="row-column">*/}
-        {/*<span>Всього</span>*/}
-        {/*<input type="text" name="all_monographs_amount" id="all_monographs_amount"*/}
-        {/*placeholder="Введіть число..."/>*/}
-        {/*</Col>*/}
-
-        {/*<Col xs={4} className="row-column">*/}
-        {/*<span>Дата засідання</span>*/}
-        {/*<input type="date" name="create_date" id="create_date"/>*/}
-        {/*</Col>*/}
-        {/*</div>*/}
-
         return (
-            <div className="IR-item">
+            <div className="IR-item" id={this.props.id}>
                 {input}
                 <div>
                     <div className="plus-btn">
-                        <img src="images/plus.png"/>
+                        <img src="images/plus.png" onClick={this.addItem}/>
                     </div>
                 </div>
             </div>
