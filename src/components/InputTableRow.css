@@ -4,7 +4,7 @@
     align-items: center;
 }
 
-.NewIR .row.table-row:first-of-type {
+.NewIR .table-row.padding-top {
     padding-top: 20px;
 }
 

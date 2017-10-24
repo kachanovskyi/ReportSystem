@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import {Col} from 'react-bootstrap';
-import {ifStringEmpty, ifNotEmptyArray, notifyModalShow, getRandomColor} from '../externalFunctions';
+import {ifStringEmpty, ifNotEmptyArray} from '../externalFunctions';
 
-import NotifyModal from './NofityModal';
 import $ from 'jquery';
 
 import './InputField.css';
@@ -14,48 +12,58 @@ class InputField extends Component {
     constructor() {
         super();
         this.state = {
-            theme_id: null,
             themes: [],
+            data: [],
             dropdownStyle: {
                 backgroundImage: "url('images/arrow.png')",
                 backgroundPosition: "97% center",
                 backgroundRepeat: "no-repeat"
             }
         };
-        // this.formSubmitted = this.formSubmitted.bind(this);
-        // this.loadData = this.loadData.bind(this);
         this.addItem = this.addItem.bind(this);
     }
 
-    componentDidMount() {
-
+    addItem({target}) {
+        InputField.addIRItem($(target), this.props.id);
     }
 
-    addItem({target}) {
-        console.log(target);
-        const $target = $(target);
-        let parent = $target.parent().parent().parent();
+    static removeItem({target}) {
+        $(target).parent().remove();
+    }
 
-        console.log(parent);
+    static addIRItem(target, id) {
 
-        console.log(parent.find($('.input-container')).clone());
+        let clone,
+            parent = target.parent().parent().parent();
 
-        if(this.props.id === "scientific_research") {
+        if(id === "scientific_research") {
 
-            parent.find($('.data-input')[0]).clone().appendTo(
-                parent.find($('.input-container'))
+            clone = parent.find($('.data-input')[0]).clone().removeClass('default');
+            clone.find('.delete-icon').on("click", function() {
+                $(this).parent().remove();
+            });
+            clone.find('textarea').val("");
+
+            clone.insertBefore(
+                parent.find($('.input-container .data-input'))[0]
             );
 
         } else {
 
             parent = parent.find($('.input-container'));
-            console.log(parent.find('textarea')[0]);
-            parent.append( $(parent.find('textarea')[0]).clone() );
+
+            clone = $(parent.find('.data-input')[0]).clone().removeClass('default');
+            clone.find('.delete-icon').on("click", function() {
+                $(this).parent().remove();
+            });
+            clone.find('textarea').val("");
+            clone.find('.pages').val("");
+
+            clone.insertBefore(
+                parent.find($('.input-container .data-input'))[0]
+            );
 
         }
-
-        // const selectValue = parent.find('select').val();
-        // console.log($('select option[value="' + selectValue + '"]').text());
     };
 
     render() {
@@ -63,22 +71,89 @@ class InputField extends Component {
         const info = this.props.info ? <p className="info">{this.props.info}</p> : "";
         const addInfo = this.props.addInfo ? <p className="add-info">{this.props.addInfo}</p> : "";
 
-        let input = <div className="input-container">
-            {info}
-            {addInfo}
-            <textarea placeholder="Заповніть дане поле..."/>
-        </div>;
+        let content, input;
 
         if( this.props.id === "scientific_research") {
+
+            if(this.props.data) {
+
+                content = this.props.data.reverse().map((item, index) => {
+
+                    if( !ifStringEmpty(item.value) ) {
+                        return (
+                            <div className={index === this.props.data.length - 1 ? "data-input default" : "data-input"} key={index}>
+                                <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
+                                <select className="theme_select" style={this.state.dropdownStyle} required>
+                                    {this.props.themes}
+                                </select>
+                                <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)" defaultValue={item.value}/>
+                            </div>);
+                    } else {
+                        return(
+                            <div className="data-input default">
+                            <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
+                            <select className="theme_select" style={this.state.dropdownStyle} required>
+                                {this.props.themes}
+                            </select>
+                            <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)"/>
+                        </div>);
+                    }
+
+                });
+
+            }
+
             input = <div className="input-container">
                 {info}
-                <div className="data-input">
-                    <select className="theme_select" style={this.state.dropdownStyle} required>
-                        {this.props.themes}
-                    </select>
+                {content}
+            </div>;
+
+        } else {
+
+            if( this.props.data && ifNotEmptyArray(this.props.data) && this.props.inputType === "extended") {
+
+                content = this.props.data.reverse().map((item, index) => {
+                    return (
+                        <div className={index === this.props.data.length - 1 ? "data-input default extended" : "data-input extended"} key={index}>
+                            <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
+                            <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)" defaultValue={item.value}/>
+                            <input type="number" className="pages" placeholder="Обсяг. друк. арк." defaultValue={item.pages}/>
+                        </div>
+                    );
+                });
+
+            } else if(this.props.inputType === "extended") {
+                content = <div className="data-input default extended">
+                    <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
+                    <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)"/>
+                    <input type="number" className="pages" placeholder="Обсяг. друк. арк."/>
+                </div>
+
+            } else if( this.props.data && ifNotEmptyArray(this.props.data) ) {
+
+                content = this.props.data.reverse().map((item, index) => {
+                    return (
+                        <div className={index === this.props.data.length - 1 ? "data-input default" : "data-input"} key={index}>
+                            <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
+                            <textarea key={index} placeholder="Зміст виконаної роботи (до 1000 знаків)" defaultValue={item.value}/>
+                        </div>
+                    );
+                });
+
+            } else {
+                content = <div className="data-input default">
+                    <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
                     <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)"/>
                 </div>
+
+            }
+
+            input = <div className="input-container">
+                {info}
+                {addInfo}
+                {content}
             </div>;
+
         }
 
         return (
@@ -86,7 +161,7 @@ class InputField extends Component {
                 {input}
                 <div>
                     <div className="plus-btn">
-                        <img src="images/plus.png" onClick={this.addItem}/>
+                        <img src="images/plus.png" alt="plus image" onClick={this.addItem}/>
                     </div>
                 </div>
             </div>

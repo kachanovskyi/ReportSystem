@@ -49,6 +49,7 @@
     font-size: 14px;
     line-height: 1;
     resize: none;
+    outline-color: #0c275d;
 }
 
 .NewIR input[type=date] {

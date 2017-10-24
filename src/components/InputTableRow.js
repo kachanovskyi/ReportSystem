@@ -2,10 +2,6 @@ import React, {Component} from 'react';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import {Col} from 'react-bootstrap';
-import {ifStringEmpty, ifNotEmptyArray, notifyModalShow, getRandomColor} from '../externalFunctions';
-
-import NotifyModal from './NofityModal';
-import $ from 'jquery';
 
 import './InputTableRow.css';
 
@@ -22,8 +18,6 @@ class InputTableRow extends Component {
                 backgroundRepeat: "no-repeat"
             }
         };
-        // this.formSubmitted = this.formSubmitted.bind(this);
-        // this.loadData = this.loadData.bind(this);
     }
 
     componentDidMount() {
@@ -49,7 +43,7 @@ class InputTableRow extends Component {
         }
 
         return (
-            <div className="row table-row">
+            <div className={this.props.topPadding ? "row table-row padding-top" : "row table-row"}>
                 <Col xs={4} md={6} className="row-title">
                     <span>{this.props.title}</span>
                 </Col>
