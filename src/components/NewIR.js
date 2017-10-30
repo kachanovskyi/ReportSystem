@@ -42,7 +42,7 @@ class NewIR extends Component {
         //     headers: myHeaders,
         //     credentials: 'same-origin'
         // })
-        fetch('./data.json')
+        fetch('./data1.json')
             .then((response) => response.json())
             .then((responseJson) => {
 
@@ -52,7 +52,9 @@ class NewIR extends Component {
 
                     let input = $(`#${x}`);
 
-                    data[x] = responseJson[x];
+                    if( ifNotEmptyArray(responseJson[x]) ) {
+                        data[x] = responseJson[x];
+                    }
 
                     if( x.includes("amount") || x === "protocol" ) {
 
@@ -128,8 +130,11 @@ class NewIR extends Component {
                 self.setState({themes: themes});
 
                 $('.theme_select').each(function (index) {
-                    $(this).val(self.state.theme_id[index]);
-                    // console.log(self.state.theme_id[index]);
+                    if(self.state.theme_id[index]) {
+                        $(this).val(self.state.theme_id[index]);
+                    } else {
+                        $(this).val(1);
+                    }
                 });
 
             })
@@ -159,6 +164,13 @@ class NewIR extends Component {
 
             } else if(x === "scientific_research") {
 
+                if(!ifNotEmptyArray(data[x])) {
+                    data[x] = [{
+                        "value": input.val(),
+                        "theme_id": +$('#theme_select').val()
+                    }]
+                }
+
                 if(ifNotEmptyArray(data[x])) {
 
                     let lastIndex = null;
@@ -168,12 +180,12 @@ class NewIR extends Component {
                         const content = $(item).find('textarea').val(),
                             theme_id = +$(item).find('.theme_select').val();
 
-                        if( (data[x][index]) && (!ifStringEmpty(content)) ) {
+                        if( (data[x][index]) ) {
 
                             data[x][index].value = content;
                             data[x][index].theme_id = theme_id;
 
-                        } else if( !ifStringEmpty(content) ) {
+                        } else  {
                             data[x][index] = {
                                 value: content,
                                 theme_id: theme_id
@@ -188,14 +200,15 @@ class NewIR extends Component {
                         data[x].splice(lastIndex + 1);
                     }
 
-                } else {
-
-                    data[x] = [{
-                        "value": input.val(),
-                        "theme_id": +$('#theme_select').val()
-                    }]
-
                 }
+                // else {
+                //
+                //     data[x] = [{
+                //         "value": input.val(),
+                //         "theme_id": +$('#theme_select').val()
+                //     }]
+                //
+                // }
 
             } else if(x !== "id") {
 
@@ -208,13 +221,13 @@ class NewIR extends Component {
                         const content = $(item).find('textarea').val(),
                             pages = $(item).find( $('.pages') ).val();
 
-                        if( (data[x][index]) && (!ifStringEmpty(content)) ) {
+                        if( (data[x][index]) ) {
                             data[x][index].value = content;
 
                             if(pages) {
                                 data[x][index].pages = pages;
                             }
-                        } else if( !ifStringEmpty(content) ) {
+                        } else {
                             data[x][index] = {
                                 value: content
                             };
@@ -243,8 +256,6 @@ class NewIR extends Component {
             }
 
         }
-
-        console.log(self.state.data);
 
         // fetch('https://23b325de.ngrok.io/report', {
         //         method: 'POST',

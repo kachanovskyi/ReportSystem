@@ -90,7 +90,7 @@ class InputField extends Component {
                             </div>);
                     } else {
                         return(
-                            <div className="data-input default">
+                            <div className="data-input default" key={index}>
                             <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
                             <select className="theme_select" style={this.state.dropdownStyle} required>
                                 {this.props.themes}
@@ -100,6 +100,16 @@ class InputField extends Component {
                     }
 
                 });
+
+            } else {
+
+                content = <div className="data-input default">
+                    <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
+                    <select className="theme_select" style={this.state.dropdownStyle} required>
+                        {this.props.themes}
+                    </select>
+                    <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)"/>
+                </div>;
 
             }
 
