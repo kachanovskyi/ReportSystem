@@ -18,10 +18,11 @@ const Header = () => {
                     </div>
                     <div className="collapse navbar-collapse" id="udsNav">
                         <ul className="nav navbar-nav">
-                            <li className="menu-item"><NavLink exact to="/" className="menu-item-link" id="chatbots">
+                            <li className="menu-item"><NavLink exact to="/" className="menu-item-link">
                                 <i className="fa fa-book" aria-hidden="true"/>
                                 <span>Індивідуальний Звіт</span>
                             </NavLink></li>
+
                             <li className="menu-item center">
                                 <img alt="logo image" src="images/logo.png"/>
                                 <div className="university-title">
@@ -29,6 +30,10 @@ const Header = () => {
                                     <span>університет</span>
                                 </div>
                             </li>
+                            <li className="menu-item"><NavLink to="/profile" className="menu-item-link">
+                                <i className="fa fa-user" aria-hidden="true"/>
+                                <span>Профіль</span>
+                            </NavLink></li>
                             <li className="menu-item"><a className="menu-item-link" href="https://23b325de.ngrok.io/logout">
                                 <i className="fa fa-sign-out" aria-hidden="true"/>
                                 <span>Вихід</span>

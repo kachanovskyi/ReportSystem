@@ -39,5 +39,7 @@ export const ifStringEmpty = (text) => {
 };
 
 export const ifNotEmptyArray = (arr) => {
-    return (arr.length > 0);
+    return (arr && arr.length > 0);
 };
+
+export const BASEURL = 'http://localhost:8080/';

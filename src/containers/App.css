@@ -106,3 +106,7 @@
 .restore-btn:focus {
     color: #002561;
 }
+
+.margin-top-10 {
+    margin-top: 10px !important;
+}

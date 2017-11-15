@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import {Col} from 'react-bootstrap';
-import {ifStringEmpty, ifNotEmptyArray} from '../externalFunctions';
+import {ifStringEmpty, ifNotEmptyArray, BASEURL} from '../externalFunctions';
 
 import NotifyModal from './NofityModal';
 import $ from 'jquery';
@@ -37,7 +37,7 @@ class NewIR extends Component {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        // fetch('https://23b325de.ngrok.io/report/6', {
+        // fetch(`${BASEURL}report/`, {
         //     method: 'GET',
         //     headers: myHeaders,
         //     credentials: 'same-origin'
@@ -51,10 +51,12 @@ class NewIR extends Component {
                 for(let x in responseJson) {
 
                     let input = $(`#${x}`);
+                    // console.log(x);
+                    // console.log(responseJson[x]);
 
-                    if( ifNotEmptyArray(responseJson[x]) ) {
+                    // if( ifNotEmptyArray(responseJson[x]) ) {
                         data[x] = responseJson[x];
-                    }
+                    // }
 
                     if( x.includes("amount") || x === "protocol" ) {
 
@@ -79,6 +81,13 @@ class NewIR extends Component {
                             this.setState({
                                 theme_id: theme_ids
                             });
+                        } else {
+
+                            data[x] = [{
+                                "value": input.val(),
+                                "theme_id": +$('#theme_select').val()
+                            }]
+
                         }
 
                     } else if ( (x === "create_date") ) {
@@ -97,6 +106,7 @@ class NewIR extends Component {
 
             })
             .catch((error) => {
+                console.log(error);
                 console.log('new report');
             });
     }
@@ -108,7 +118,7 @@ class NewIR extends Component {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        // fetch('https://23b325de.ngrok.io/theme', {
+        // fetch(`${BASEURL}theme`, {
         //         method: 'GET',
         //         headers: myHeaders,
         //         credentials: 'same-origin'
@@ -248,7 +258,7 @@ class NewIR extends Component {
                 } else {
 
                     data[x] = [{
-                        "value": input.val(),
+                        "value": input.find('textarea').val(),
                     }]
 
                 }
@@ -257,7 +267,8 @@ class NewIR extends Component {
 
         }
 
-        // fetch('https://23b325de.ngrok.io/report', {
+        console.log(this.state.data);
+        // fetch(`${BASEURL}/report`, {
         //         method: 'POST',
         //         headers: myHeaders,
         //         credentials: 'same-origin',
