@@ -1,0 +1,36 @@
+{
+  "academicStatuses": [
+    {
+      "id": "1",
+      "value": "status1"
+    },
+    {
+      "id": "2",
+      "value": "status2"
+    }
+  ],
+  "scienceDegrees": [
+    {
+      "id": "1",
+      "value": "degree1"
+    },
+    {
+      "id": "2",
+      "value": "degree2"
+    }
+  ],
+  "positions": [
+    {
+      "id": "1",
+      "value": "position1"
+    },
+    {
+      "id": "2",
+      "value": "position2"
+    },
+    {
+      "id": "3",
+      "value": "position3"
+    }
+  ]
+}

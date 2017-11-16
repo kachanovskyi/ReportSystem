@@ -90,12 +90,14 @@ class NewIR extends Component {
 
                         }
 
-                    } else if ( (x === "create_date") ) {
+                    } else if( (x === "create_date") ) {
 
                         if(responseJson[x] !== null) {
                             document.getElementById("create_date").value = responseJson[x];
                         }
 
+                    } else if(x === "id") {
+                        data[x] = responseJson[x];
                     }
 
                 }
@@ -185,7 +187,8 @@ class NewIR extends Component {
 
                     let lastIndex = null;
 
-                    $(input.find( $('.data-input') ).get().reverse()).each((index, item) => {
+                    // $(input.find( $('.data-input') ).get().reverse()).each((index, item) => {
+                    input.find( $('.data-input')).each((index, item) => {
 
                         const content = $(item).find('textarea').val(),
                             theme_id = +$(item).find('.theme_select').val();
@@ -226,7 +229,8 @@ class NewIR extends Component {
 
                     let lastIndex = null;
 
-                    $(input.find( $('.data-input') ).get().reverse()).each((index, item) => {
+                    // $(input.find( $('.data-input') ).get().reverse()).each((index, item) => {
+                    input.find( $('.data-input')).each((index, item) => {
 
                         const content = $(item).find('textarea').val(),
                             pages = $(item).find( $('.pages') ).val();

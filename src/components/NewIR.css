@@ -56,6 +56,12 @@
     padding: 15px 10px 15px 10px;
 }
 
+.NewIR input[type=radio] {
+    width: auto;
+    margin-right: 10px;
+}
+
+
 .NewIR select {
     -webkit-appearance: none;
     background-size: 2%;

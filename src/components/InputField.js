@@ -44,8 +44,8 @@ class InputField extends Component {
             });
             clone.find('textarea').val("");
 
-            clone.insertBefore(
-                parent.find($('.input-container .data-input'))[0]
+            clone.insertAfter(
+                parent.find($('.input-container .data-input')).last()
             );
 
         } else {
@@ -59,8 +59,8 @@ class InputField extends Component {
             clone.find('textarea').val("");
             clone.find('.pages').val("");
 
-            clone.insertBefore(
-                parent.find($('.input-container .data-input'))[0]
+            clone.insertAfter(
+                parent.find($('.input-container .data-input')).last()
             );
 
         }
@@ -77,7 +77,7 @@ class InputField extends Component {
 
             if(this.props.data) {
 
-                content = this.props.data.reverse().map((item, index) => {
+                content = this.props.data.map((item, index) => {
 
                     if( !ifStringEmpty(item.value) ) {
                         return (
@@ -122,7 +122,7 @@ class InputField extends Component {
 
             if( this.props.data && ifNotEmptyArray(this.props.data) && this.props.inputType === "extended") {
 
-                content = this.props.data.reverse().map((item, index) => {
+                content = this.props.data.map((item, index) => {
                     return (
                         <div className={index === this.props.data.length - 1 ? "data-input default extended" : "data-input extended"} key={index}>
                             <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
@@ -141,7 +141,8 @@ class InputField extends Component {
 
             } else if( this.props.data && ifNotEmptyArray(this.props.data) ) {
 
-                content = this.props.data.reverse().map((item, index) => {
+                // content = this.props.data.reverse().map((item, index) => {
+                content = this.props.data.map((item, index) => {
                     return (
                         <div className={index === this.props.data.length - 1 ? "data-input default" : "data-input"} key={index}>
                             <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
