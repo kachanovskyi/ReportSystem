@@ -64,7 +64,8 @@
 }
 
 .login-btn,
-.restore-btn {
+.restore-btn,
+.download-btn {
     display: inline-block;
     float: right;
     background-color: #002561;
@@ -79,6 +80,10 @@
     outline: none;
     border: none;
     transition: .2s ease-in-out;
+}
+
+.download-btn {
+    padding: 15px 30px;
 }
 
 .login-btn:hover {

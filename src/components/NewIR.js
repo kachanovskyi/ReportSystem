@@ -23,11 +23,31 @@ class NewIR extends Component {
         };
         this.formSubmitted = this.formSubmitted.bind(this);
         this.loadData = this.loadData.bind(this);
+        this.reportDownload = this.reportDownload.bind(this);
         this.loadScientificManager = this.loadScientificManager.bind(this);
     }
 
     componentDidMount() {
         this.loadData();
+    }
+
+    reportDownload() {
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        fetch(`${BASEURL}report/download`, {
+                method: 'GET',
+                headers: myHeaders,
+                credentials: 'same-origin'
+        })
+        // fetch(`./cathedra${id}.json`)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+            })
+            .catch((error) => {
+                console.log('error loading file\n', error);
+            });
     }
 
 
@@ -271,7 +291,7 @@ class NewIR extends Component {
 
         }
 
-        console.log(this.state.data);
+        // console.log(this.state.data);
         // fetch(`${BASEURL}/report`, {
         //         method: 'POST',
         //         headers: myHeaders,
@@ -297,7 +317,10 @@ class NewIR extends Component {
                     <Col xs={10} xsOffset={1} lg={8} lgOffset={2}>
                         <form onSubmit={this.formSubmitted} className="IR-form">
 
-                            <h2 className="title">Науковий доробок</h2>
+                            <div className="title-container">
+                                <h2 className="title">Науковий доробок</h2>
+                                <button className="download-btn" onClick={this.reportDownload}>Завантажити звіт</button>
+                            </div>
 
                             <InputField id="scientific_research" themes={this.state.themes} data={this.state.data.scientific_research}
                                         info="участь у науково-дослідній тематиці кафедри(підрозділу): шифр, назва НДР (науковий керівник)"/>

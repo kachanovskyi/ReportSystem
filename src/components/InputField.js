@@ -81,7 +81,7 @@ class InputField extends Component {
 
                     if( !ifStringEmpty(item.value) ) {
                         return (
-                            <div className={index === this.props.data.length - 1 ? "data-input default" : "data-input"} key={index}>
+                            <div className={index ? "data-input" : "data-input default"} key={index}>
                                 <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
                                 <select className="theme_select" style={this.state.dropdownStyle} required>
                                     {this.props.themes}
@@ -124,7 +124,7 @@ class InputField extends Component {
 
                 content = this.props.data.map((item, index) => {
                     return (
-                        <div className={index === this.props.data.length - 1 ? "data-input default extended" : "data-input extended"} key={index}>
+                        <div className={index ? "data-input extended" : "data-input default extended"} key={index}>
                             <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
                             <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)" defaultValue={item.value}/>
                             <input type="number" className="pages" placeholder="Обсяг. друк. арк." defaultValue={item.pages}/>
@@ -144,7 +144,7 @@ class InputField extends Component {
                 // content = this.props.data.reverse().map((item, index) => {
                 content = this.props.data.map((item, index) => {
                     return (
-                        <div className={index === this.props.data.length - 1 ? "data-input default" : "data-input"} key={index}>
+                        <div className={index ? "data-input" : "data-input default"} key={index}>
                             <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
                             <textarea key={index} placeholder="Зміст виконаної роботи (до 1000 знаків)" defaultValue={item.value}/>
                         </div>

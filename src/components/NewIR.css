@@ -72,6 +72,19 @@
     padding: 20px 20px 40px;
 }
 
+.NewIR .title-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.NewIR .title-container .title {
+    margin: 0;
+}
+
+
 .command {
     padding: 4px;
     background-color: #F2994A;
@@ -82,9 +95,6 @@
 .NewIR .title {
     margin: 20px auto 0;
     text-align: left;
-}
-.NewIR .subtitle {
-    /*margin: -10px 0 20px;*/
 }
 
 .IR-form button[type=submit] {

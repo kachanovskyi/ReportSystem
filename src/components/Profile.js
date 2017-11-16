@@ -136,7 +136,7 @@ class Profile extends Component {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        // fetch(`${BASEURL}/faculty/${id}/cathedra`, {
+        // fetch(`${BASEURL}faculty/${id}/cathedra`, {
         //         method: 'GET',
         //         headers: myHeaders,
         //         credentials: 'same-origin'
