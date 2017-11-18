@@ -34,7 +34,7 @@ const Header = () => {
                                 <i className="fa fa-user" aria-hidden="true"/>
                                 <span>Профіль</span>
                             </NavLink></li>
-                            <li className="menu-item"><a className="menu-item-link" href="https://23b325de.ngrok.io/logout">
+                            <li className="menu-item"><a className="menu-item-link" href="https://lnu.botscrew.com/logout">
                                 <i className="fa fa-sign-out" aria-hidden="true"/>
                                 <span>Вихід</span>
                             </a></li>

@@ -73,12 +73,12 @@ class Profile extends Component {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        // fetch(`${BASEURL}properties`, {
-        //         method: 'GET',
-        //         headers: myHeaders,
-        //         credentials: 'same-origin'
-        // })
-        fetch('./properties.json')
+        fetch(`${BASEURL}properties`, {
+                method: 'GET',
+                headers: myHeaders,
+                credentials: 'same-origin'
+        })
+        // fetch('./properties.json')
             .then((response) => response.json())
             .then((responseJson) => {
 
@@ -136,12 +136,12 @@ class Profile extends Component {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        // fetch(`${BASEURL}faculty/${id}/cathedra`, {
-        //         method: 'GET',
-        //         headers: myHeaders,
-        //         credentials: 'same-origin'
-        // })
-        fetch(`./cathedra${id}.json`)
+        fetch(`${BASEURL}faculty/${id}/cathedra`, {
+                method: 'GET',
+                headers: myHeaders,
+                credentials: 'same-origin'
+        })
+        // fetch(`./cathedra${id}.json`)
             .then((response) => response.json())
             .then((responseJson) => {
 
@@ -171,12 +171,12 @@ class Profile extends Component {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        // fetch(`${BASEURL}faculty`, {
-        //         method: 'GET',
-        //         headers: myHeaders,
-        //         credentials: 'same-origin'
-        // })
-        fetch('./faculty.json')
+        fetch(`${BASEURL}faculty`, {
+                method: 'GET',
+                headers: myHeaders,
+                credentials: 'same-origin'
+        })
+        // fetch('./faculty.json')
             .then((response) => response.json())
             .then((responseJson) => {
 
@@ -207,12 +207,12 @@ class Profile extends Component {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        // fetch(`${BASEURL}/user`, {
-        //     method: 'GET',
-        //     headers: myHeaders,
-        //     credentials: 'same-origin'
-        // })
-        fetch('./user.json')
+        fetch(`${BASEURL}/user`, {
+            method: 'GET',
+            headers: myHeaders,
+            credentials: 'same-origin'
+        })
+        // fetch('./user.json')
             .then((response) => response.json())
             .then((responseJson) => {
 
@@ -264,21 +264,21 @@ class Profile extends Component {
             cathedra: $('.cathedra_select').val()
         };
 
-        console.log(data);
-        // fetch(`${BASEURL}user`, {
-        //         method: 'POST',
-        //         headers: myHeaders,
-        //         credentials: 'same-origin',
-        //         body: JSON.stringify(data)
-        //     }
-        // )
-        //     // .then((response) => response.json())
-        //     .then((responseJson) => {
-        //         console.log(responseJson);
-        //     })
-        //     .catch((error) => {
-        //         console.error(error);
-        //     });
+        // console.log(data);
+        fetch(`${BASEURL}user`, {
+                method: 'POST',
+                headers: myHeaders,
+                credentials: 'same-origin',
+                body: JSON.stringify(data)
+            }
+        )
+            // .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
 
         return false;
     };
