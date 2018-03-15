@@ -332,23 +332,24 @@ class Profile extends Component {
                             <div className="IR-item">
                                 <p className="info"><b>Науковий ступінь</b></p>
                                 <div className="margin-top-10 text-left">
-                                    {this.state.scienceDegrees.map((degree, index) => (
-                                        <div key={degree.id}>
-                                            <input type="radio" name="scienceDegree" value={degree.id} id={`scienceDegree${degree.id}`}/>
-                                            <label htmlFor={`scienceDegree${degree.id}`}>{degree.value}</label>
+                                    {this.state.academicStatuses.map((status, index) => (
+                                        <div key={status.id}>
+                                            <input type="radio" name="academicStatus" value={status.id} id={`academicStatus${status.id}`}/>
+                                            <label htmlFor={`academicStatus${status.id}`}>{status.value}</label>
                                         </div>
-                                    ))}
+                                     ))}
                                 </div>
                                 <input type="number" placeholder="Рік захисту" id="defenseYear"
                                        className="margin-top-10"/>
                             </div>
                             <div className="IR-item">
                                 <p className="info"><b>Вчене звання</b></p>
+
                                 <div className="margin-top-10 text-left">
-                                    {this.state.academicStatuses.map((status, index) => (
-                                        <div key={status.id}>
-                                            <input type="radio" name="academicStatus" value={status.id} id={`academicStatus${status.id}`}/>
-                                            <label htmlFor={`academicStatus${status.id}`}>{status.value}</label>
+                                    {this.state.scienceDegrees.map((degree, index) => (
+                                        <div key={degree.id}>
+                                            <input type="radio" name="scienceDegree" value={degree.id} id={`scienceDegree${degree.id}`}/>
+                                            <label htmlFor={`scienceDegree${degree.id}`}>{degree.value}</label>
                                         </div>
                                     ))}
                                 </div>

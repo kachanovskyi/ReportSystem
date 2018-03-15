@@ -291,7 +291,7 @@ class NewIR extends Component {
 
         }
 
-        // console.log(this.state.data);
+        console.log(this.state.data);
         fetch(`${BASEURL}/report`, {
                 method: 'POST',
                 headers: myHeaders,
@@ -319,8 +319,8 @@ class NewIR extends Component {
 
                             <div className="title-container">
                                 <h2 className="title">Науковий доробок</h2>
-                                <a className="download-btn" href="https://lnu.botscrew.com/report/download" target="_blank">Завантажити звіт</a>
-                                {/*<a className="download-btn" href="http://localhost:8080/report/download" target="_blank">Завантажити звіт</a>*/}
+                                {/*<a className="download-btn" href="https://lnu.botscrew.com/report/download" target="_blank">Завантажити звіт</a>*/}
+                                <a className="download-btn" href="http://localhost:8080/report/download" target="_blank">Згенерувати pdf-файл</a>
                             </div>
 
                             <InputField id="scientific_research" themes={this.state.themes} data={this.state.data.scientific_research}
@@ -348,9 +348,6 @@ class NewIR extends Component {
 
                             <h2 className="title">Публікації</h2>
 
-                            <InputField id="joint_publication"
-                                        info="спільні публікації зі студентами"/>
-
                             <InputTableRow title="Монографії" firstId="all_monographs_amount" secondId="monographs_amount" topPadding={true}/>
 
                             <InputTableRow title="Підручники" firstId="all_textbooks_amount" secondId="textbooks_amount"/>
@@ -367,9 +364,6 @@ class NewIR extends Component {
 
 
                             <h2 className="title">Праці, що вийшли з друку за звітний період</h2>
-                            <p className="subtitle">
-                                бібліографічний опис згідно з державним стандартом
-                            </p>
 
                             <InputField id="monograph_rp" info="монографії" inputType="extended" data={this.state.data.monograph_rp}/>
 
@@ -394,10 +388,10 @@ class NewIR extends Component {
                             <InputField id="article_ukraine_other" data={this.state.data.article_ukraine_other}
                                         info="статті в інших виданнях України"/>
 
-                            <InputField id="theses_ukraine" data={this.state.data.theses_ukraine}
+                            <InputField id="theses_international" data={this.state.data.theses_ukraine}
                                         info="тези доповідей на міжнародних конференціях"/>
 
-                            <InputField id="theses_international" data={this.state.data.theses_international}
+                            <InputField id="theses_ukraine" data={this.state.data.theses_international}
                                         info="тези доповідей на вітчизняних конференціях"/>
 
                             <InputField id="international_conferences" data={this.state.data.international_conferences}
@@ -438,7 +432,7 @@ class NewIR extends Component {
                             <InputField id="other_activity" data={this.state.data.other_activity}
                                         info="інші види діяльності"/>
 
-                            <InputTableRow title="Звіт заслухано" firstId="create_date" secondId="protocol" topPadding={true}
+                            <InputTableRow id="create_date" title="Звіт заслухано" firstId="create_date" secondId="protocol" topPadding={true}
                                            firstColTitle="Дата засідання" secondColTitle="Номер протоколу"/>
 
 
