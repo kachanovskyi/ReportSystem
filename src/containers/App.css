@@ -1,0 +1,117 @@
+.App {
+    display: block;
+    float: left;
+    margin: 0 auto;
+    border: 3px dashed orangered;
+    background-color: #F9F9F9;
+    height: 100%;
+}
+
+.text-underlined {
+    text-decoration: underline;
+}
+
+.wrapper {
+    height: 50px;
+    margin: calc(50vh - 25px) auto 0;
+    width: 180px;
+}
+.circle {
+    border-radius: 50%;
+    border: 3px #0a0a0a solid;
+    float: left;
+    height: 50px;
+    margin: 0 5px;
+    width: 50px;
+}
+.circle-1 {
+    animation: move 1s ease-in-out infinite;
+}
+.circle-1a {
+    animation: fade 1s ease-in-out infinite;
+}
+@keyframes fade {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+.circle-2 {
+    animation: move 1s ease-in-out infinite;
+}
+@keyframes move {
+    0% {transform: translateX(0);}
+    100% {transform: translateX(60px);}
+}
+.circle-1a {
+    margin-left: -55px;
+    opacity: 0;
+}
+.circle-3 {
+    animation: circle-3 1s ease-in-out infinite;
+    opacity: 1;
+}
+@keyframes circle-3 {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+.wrapper h1 {
+    color: #222;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    margin: 40px auto;
+    text-transform: uppercase;
+}
+
+.login-btn,
+.restore-btn,
+.download-btn {
+    display: inline-block;
+    float: right;
+    background-color: #002561;
+    cursor: pointer !important;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 15px 60px;
+    border-radius: 4px;
+    box-shadow: none;
+    outline: none;
+    border: none;
+    transition: .2s ease-in-out;
+}
+
+.download-btn {
+    padding: 15px 30px;
+}
+
+.login-btn:hover {
+    background-color: #022d73;
+}
+.login-btn:active,
+.login-btn:focus {
+    background-color: #022d73;
+}
+
+.restore-btn {
+    float: left;
+    background: transparent;
+    text-decoration: underline;
+    padding: 15px 0;
+    font-weight: 300;
+    color: #002561;
+}
+
+.restore-btn:hover {
+    color: #002561;
+}
+
+.restore-btn:active,
+.restore-btn:focus {
+    color: #002561;
+}
+
+.margin-top-10 {
+    margin-top: 10px !important;
+}

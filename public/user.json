@@ -1,0 +1,16 @@
+{
+  "email": "o@b.com",
+  "password": null,
+  "name": "Олег",
+  "lastName": "Пилипчак",
+  "fathersName": "Ярославович",
+  "birthDate": "2017-11-24",
+  "graduationDate": "1234",
+  "awardingDate": "1993",
+  "defenseYear": "2144",
+  "position": 3,
+  "scienceDegree": 2,
+  "academicStatus": 2,
+  "cathedra": 2,
+  "faculty": 2
+}

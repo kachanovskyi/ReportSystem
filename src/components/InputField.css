@@ -1,0 +1,162 @@
+.NewIR {
+    margin-top: 80px;
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+.NewIR h2 {
+    color: #0c275d;
+}
+
+.NewIR p {
+    font: normal normal normal 15px/1.4em din-next-w01-light,din-next-w02-light,din-next-w10-light,sans-serif;
+    color: #333333;
+    text-align: left;
+    margin: 0;
+}
+
+.NewIR .add-info {
+    color: #999;
+}
+
+.NewIR .bot-connect {
+    text-decoration: underline;
+}
+
+.NewIR .login-btn,
+.NewIR .restore-btn {
+    float: none;
+}
+
+.NewIR .restore-btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 20px 0;
+}
+.NewIR .restore-btn:hover {
+    text-decoration: underline;
+}
+
+.NewIR input,
+.NewIR textarea,
+.NewIR select {
+    width: 100%;
+    margin: 10px 0 20px;
+    border: 1px solid #E0E0E0;
+    background-color: #ffffff;
+    border-radius: 4px;
+    padding: 15px 40px 15px 20px;
+    font-size: 14px;
+    line-height: 1;
+    resize: none;
+}
+
+.NewIR input[type=date] {
+    padding: 15px 10px 15px 10px;
+}
+
+.NewIR select {
+    -webkit-appearance: none;
+    background-size: 2%;
+    margin-bottom: 0;
+}
+
+.NewIR textarea {
+    padding: 20px 20px 40px;
+}
+
+.command {
+    padding: 4px;
+    background-color: #F2994A;
+    color: #ffffff;
+    border-radius: 4px;
+}
+
+.IR-form button[type=submit] {
+    margin-top: 10px;
+}
+
+@media (max-width: 991px) {
+
+    .NewIR select {
+        background-size: 3%;
+    }
+
+}
+@media (max-width: 767px) {
+
+    .NewIR select {
+        background-size: 4%;
+    }
+
+}
+@media (max-width: 575px) {
+
+    .NewIR select {
+        background-size: 7%;
+    }
+
+}
+
+
+.IR-item {
+    display: flex;
+    align-items: flex-end;
+    padding-top: 20px;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.IR-item .input-container {
+    width: calc(100% - 60px);
+}
+
+.IR-item .plus-btn {
+    width: 50px;
+    border-radius: 100px;
+    transition: .2s ease-in-out;
+    margin: 0 0 20px 10px;
+    box-shadow: 0 0 0 0 rgba(12, 39, 93, 0.7);
+}
+
+.IR-item .plus-btn:hover {
+    box-shadow: 0 4px 8px 0 rgba(12, 39, 93, 0.2), 0 6px 20px 0 rgba(12, 39, 93, 0.19);
+    cursor: pointer;
+}
+
+.IR-item .plus-btn img {
+    width: 100%;
+    border-radius: 100px;
+}
+
+.IR-item .data-input {
+    position: relative;
+}
+
+.IR-item .data-input.extended {
+    display: flex;
+    flex-direction: row;
+}
+
+.IR-item .data-input.extended textarea {
+    border-radius: 4px 0 0 4px;
+}
+
+.IR-item .data-input.extended input {
+    width: 22%;
+    border-radius: 0 4px 4px 0;
+    padding: 10px;
+}
+
+.IR-item .data-input .delete-icon {
+    position: absolute;
+    top: 10px;
+    right: -43px;
+    font-size: 22px;
+    cursor: pointer;
+    color: #0c275d;
+    z-index: 1030;
+}
+
+.IR-item .data-input.default .delete-icon {
+    display: none !important;
+}
