@@ -136,7 +136,7 @@ class InputField extends Component {
                 content = <div className="data-input default extended">
                     <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
                     <textarea placeholder="Бібліографічний опис згідно з державним стандартом (до 1000 знаків)"/>
-                    <input type="number" step="0.1" className="pages" placeholder="Обсяг друк. арк. автора"/>
+                    <input type="number" step="0.1" min="0" className="pages" placeholder="Обсяг друк. арк. автора"/>
                 </div>
 
             } else if( this.props.data && ifNotEmptyArray(this.props.data) ) {
@@ -202,16 +202,24 @@ class InputField extends Component {
 
         }
 
-        return (
-            <div className="IR-item" id={this.props.id}>
-                {input}
-                <div>
-                    <div className="plus-btn">
-                        <img src="images/plus.png" alt="plus image" onClick={this.addItem}/>
+        if (this.props.id === "scientific_research" || this.props.id === "scientific_research_global") {
+            return (
+                <div className="IR-item" id={this.props.id}>
+                    {input}
+                    <div>
+                        <div className="plus-btn">
+                            <img src="images/plus.png" alt="plus image" onClick={this.addItem}/>
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return (
+                <div className="IR-item" id={this.props.id}>
+                    {input}
+                </div>
+            );
+        }
     }
 
 }
