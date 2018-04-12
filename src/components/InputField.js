@@ -138,7 +138,6 @@ class InputField extends Component {
                         </div>
                     );
                 });
-
             } else if(this.props.inputType === "extended") {
                 content = <div className="data-input default extended">
                     <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>

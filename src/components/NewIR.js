@@ -206,7 +206,7 @@ class NewIR extends Component {
         fetch(`${BASEURL}all-themes/`, {
             method: 'GET',
             headers: myHeaders,
-            // credentials: 'same-origin'
+            credentials: 'same-origin'
         })
         // fetch('./scientificData.json')
             .then((response) => response.json())
@@ -247,7 +247,7 @@ class NewIR extends Component {
         fetch(`${BASEURL}theme`, {
             method: 'GET',
             headers: myHeaders,
-            // credentials: 'same-origin'
+            credentials: 'same-origin'
         })
         // fetch('./scientificData.json')
             .then((response) => response.json())
@@ -548,8 +548,7 @@ class NewIR extends Component {
                             <InputField id="other_activity" data={this.state.data.other_activity}
                                         info="інші види діяльності"/>
 
-                            <InputTableRow title="Звіт заслухано" firstId="create_date" secondId="protocol"
-                                           topPadding={true}
+                            <InputTableRow id="create_date" title="Звіт заслухано" firstId="create_date" secondId="protocol" topPadding={true}
                                            firstColTitle="Дата засідання" secondColTitle="Номер протоколу"/>
 
 
