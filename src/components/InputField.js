@@ -35,14 +35,16 @@ class InputField extends Component {
 
         let clone,
             parent = target.parent().parent().parent();
+        if (id === "scientific_research" || id === "scientific_research_global") {
 
-        if(id === "scientific_research") {
-
-            clone = parent.find($('.data-input')[0]).clone().removeClass('default');
-            clone.find('.delete-icon').on("click", function() {
+            clone = parent.find($('.data-input').filter(function(){
+                return $(this).attr("id")===id;
+            })[0]).clone().removeClass('default');
+            clone.find('.delete-icon').on("click", function () {
                 $(this).parent().remove();
             });
             clone.find('textarea').val("");
+            clone.find('select').val("");
 
             clone.insertAfter(
                 parent.find($('.input-container .data-input')).last()
@@ -53,7 +55,7 @@ class InputField extends Component {
             parent = parent.find($('.input-container'));
 
             clone = $(parent.find('.data-input')[0]).clone().removeClass('default');
-            clone.find('.delete-icon').on("click", function() {
+            clone.find('.delete-icon').on("click", function () {
                 $(this).parent().remove();
             });
             clone.find('textarea').val("");
@@ -73,39 +75,43 @@ class InputField extends Component {
 
         let content, input;
 
-        if( this.props.id === "scientific_research") {
+        if (this.props.id === "scientific_research" || this.props.id === "scientific_research_global") {
 
-            if(this.props.data) {
+            // console.log(this.props.id);
+            // console.log(this.props.data);
+
+            if (this.props.data) {
 
                 content = this.props.data.map((item, index) => {
 
-                    if( !ifStringEmpty(item.value) ) {
+                    if (!ifStringEmpty(item.value)) {
                         return (
-                            <div className={index ? "data-input" : "data-input default"} key={index}>
+                            <div className={index ? "data-input" : "data-input default"} key={index} id={this.props.id}>
                                 <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
-                                <select className="theme_select" style={this.state.dropdownStyle} required>
+                                <select className="theme_select" style={this.state.dropdownStyle} id={this.props.id}>
                                     {this.props.themes}
                                 </select>
-                                <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)" defaultValue={item.value}/>
+                                <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)"
+                                          defaultValue={item.value}/>
                             </div>);
                     } else {
-                        return(
-                            <div className="data-input default" key={index}>
-                            <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
-                            <select className="theme_select" style={this.state.dropdownStyle} required>
-                                {this.props.themes}
-                            </select>
-                            <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)"/>
-                        </div>);
+                        return (
+                            <div className="data-input default" key={index} id={this.props.id}>
+                                <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
+                                <select className="theme_select" style={this.state.dropdownStyle} id={this.props.id}>
+                                    {this.props.themes}
+                                </select>
+                                <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)"/>
+                            </div>);
                     }
 
                 });
 
             } else {
 
-                content = <div className="data-input default">
+                content = <div className="data-input default" id={this.props.id}>
                     <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
-                    <select className="theme_select" style={this.state.dropdownStyle} required>
+                    <select className="theme_select" style={this.state.dropdownStyle} id={this.props.id}>
                         {this.props.themes}
                     </select>
                     <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)"/>
@@ -120,43 +126,78 @@ class InputField extends Component {
 
         } else {
 
-            if( this.props.data && ifNotEmptyArray(this.props.data) && this.props.inputType === "extended") {
+            if (this.props.data && ifNotEmptyArray(this.props.data) && this.props.inputType === "extended") {
 
                 content = this.props.data.map((item, index) => {
                     return (
                         <div className={index ? "data-input extended" : "data-input default extended"} key={index}>
                             <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
                             <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)" defaultValue={item.value}/>
-                            <input type="number" className="pages" placeholder="Обсяг. друк. арк." defaultValue={item.pages}/>
+                            <input type="number" step="0.1" min="0" className="pages" placeholder="Обсяг. друк. арк."
+                                   defaultValue={item.pages}/>
                         </div>
                     );
                 });
-
             } else if(this.props.inputType === "extended") {
                 content = <div className="data-input default extended">
                     <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
-                    <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)"/>
-                    <input type="number" className="pages" placeholder="Обсяг. друк. арк."/>
+                    <textarea placeholder="Бібліографічний опис згідно з державним стандартом (до 1000 знаків)"/>
+                    <input type="number" step="0.1" min="0" className="pages" placeholder="Обсяг друк. арк. автора"/>
                 </div>
 
             } else if( this.props.data && ifNotEmptyArray(this.props.data) ) {
 
-                // content = this.props.data.reverse().map((item, index) => {
-                content = this.props.data.map((item, index) => {
-                    return (
-                        <div className={index ? "data-input" : "data-input default"} key={index}>
-                            <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
-                            <textarea key={index} placeholder="Зміст виконаної роботи (до 1000 знаків)" defaultValue={item.value}/>
-                        </div>
-                    );
-                });
+                if (this.props.id === "article_impactor" || this.props.id === "article_wss" || this.props.id === "article_international"
+                        || this.props.id === "article_ukraine" || this.props.id === "article_ukraine_other" || this.props.id === "theses_ukraine"
+                        || this.props.id === "theses_international") {
+                    content = this.props.data.map((item, index) => {
+                        return (
+                            <div className={index ? "data-input" : "data-input default"} key={index}>
+                                <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
+                                    <textarea key={index} placeholder="Бібліографічний опис згідно з державним стандартом (до 1000 знаків)" defaultValue={item.value}/>
+                            </div>
+                        );
+                    });
+                } else if (this.props.id === "international_conferences"){
+                    content = this.props.data.map((item, index) => {
+                        return (
+                            <div className={index ? "data-input" : "data-input default"} key={index}>
+                                <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
+                                <textarea key={index} placeholder="Назва конференції, час та місце проведення (до 1000 знаків)" defaultValue={item.value}/>
+                            </div>
+                        );
+                    });
+                } else {
+                    // content = this.props.data.reverse().map((item, index) => {
+                    content = this.props.data.map((item, index) => {
+                        return (
+                            <div className={index ? "data-input" : "data-input default"} key={index}>
+                                <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
+                                <textarea key={index} placeholder="Зміст виконаної роботи (до 1000 знаків)" defaultValue={item.value}/>
+                            </div>
+                        );
+                    });
+                }
 
             } else {
-                content = <div className="data-input default">
-                    <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
-                    <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)"/>
-                </div>
-
+                if (this.props.id === "article_impactor" || this.props.id === "article_wss" || this.props.id === "article_international"
+                        || this.props.id === "article_ukraine" || this.props.id === "article_ukraine_other" || this.props.id === "theses_ukraine"
+                        || this.props.id === "theses_international") {
+                    content = <div className="data-input default">
+                        <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
+                        <textarea placeholder="Бібліографічний опис згідно з державним стандартом (до 1000 знаків)"/>
+                    </div>
+                    } else if ( this.props.id === "international_conferences") {
+                        content = <div className="data-input default">
+                            <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
+                                <textarea placeholder="Назва конференції, час та місце проведення (до 1000 знаків)"/>
+                            </div>
+                    } else {
+                    content = <div className="data-input default">
+                        <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
+                        <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)"/>
+                    </div>
+                }
             }
 
             input = <div className="input-container">
@@ -167,16 +208,24 @@ class InputField extends Component {
 
         }
 
-        return (
-            <div className="IR-item" id={this.props.id}>
-                {input}
-                <div>
-                    <div className="plus-btn">
-                        <img src="images/plus.png" alt="plus image" onClick={this.addItem}/>
+        if (this.props.id === "scientific_research" || this.props.id === "scientific_research_global") {
+            return (
+                <div className="IR-item" id={this.props.id}>
+                    {input}
+                    <div>
+                        <div className="plus-btn">
+                            <img src="images/plus.png" alt="plus image" onClick={this.addItem}/>
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return (
+                <div className="IR-item" id={this.props.id}>
+                    {input}
+                </div>
+            );
+        }
     }
 
 }

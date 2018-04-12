@@ -119,11 +119,37 @@ nav > ul > li:last-child {
     }
 }
 
-@media (min-width: 768px) {
+@media (max-width: 767px) {
 
     .navbar-nav > li {
         float: none;
         display: inline-block;
     }
 
+    .bm-burger-button {
+        display: block !important;
+    }
+}
+
+.container-fluid {
+    padding-left: 0px !important;
+}
+
+.bm-burger-button {
+    top: 8px !important;
+    display: none;
+}
+
+.bm-burger-bars {
+    background: #f9f9f9 !important;
+}
+
+.bm-item-list a {
+    padding: 0.8em;
+    color: rgb(184, 183, 173);
+}
+
+span {
+    margin-left: 10px;
+    font-weight: 700;
 }
