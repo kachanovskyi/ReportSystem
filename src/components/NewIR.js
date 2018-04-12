@@ -434,8 +434,6 @@ class NewIR extends Component {
 
         }
 
-        console.log(JSON.stringify(self.state.data));
-
         fetch(`${BASEURL}report`, {
                 method: 'POST',
                 headers: myHeaders,
@@ -501,43 +499,33 @@ class NewIR extends Component {
 
                             <h2 className="title">Публікації</h2>
 
-                            <InputTableRow title="Монографії" firstId="all_monographs_amount"
-                                           secondId="monographs_amount" topPadding={true}/>
+                            <InputTableRow title="Монографії" firstId="all_monographs_amount" secondId="monographs_amount" topPadding={true}/>
 
-                            <InputTableRow title="Підручники" firstId="all_textbooks_amount"
-                                           secondId="textbooks_amount"/>
+                            <InputTableRow title="Підручники" firstId="all_textbooks_amount" secondId="textbooks_amount"/>
 
-                            <InputTableRow title="Навчальні посібники" firstId="all_tutorials_amount"
-                                           secondId="tutorials_amount"/>
+                            <InputTableRow title="Навчальні посібники" firstId="all_tutorials_amount" secondId="tutorials_amount"/>
 
                             <InputTableRow title="Статті" firstId="all_articles_amount" secondId="articles_amount"/>
 
-                            <InputTableRow title="Інші наукові видання" firstId="all_other_editions_amount"
-                                           secondId="other_editions_amount"/>
+                            <InputTableRow title="Інші наукові видання" firstId="all_other_editions_amount" secondId="other_editions_amount"/>
 
-                            <InputTableRow title="Тези доповідей на конференціях" firstId="all_theses_amount"
-                                           secondId="theses_amount"/>
+                            <InputTableRow title="Тези доповідей на конференціях" firstId="all_theses_amount" secondId="theses_amount"/>
 
                             <InputTableRow title="Патенти" firstId="all_patents_amount" secondId="patents_amount"/>
 
 
                             <h2 className="title">Праці, що вийшли з друку за звітний період</h2>
 
-                            <InputField id="monograph_rp" info="монографії" inputType="extended"
-                                        data={this.state.data.monograph_rp}/>
+                            <InputField id="monograph_rp" info="монографії" inputType="extended" data={this.state.data.monograph_rp}/>
 
-                            <InputField id="textbook_rp" info="підручники" inputType="extended"
-                                        data={this.state.data.textbook_rp}/>
+                            <InputField id="textbook_rp" info="підручники" inputType="extended" data={this.state.data.textbook_rp}/>
 
-                            <InputField id="tutorial_rp" info="навчальні посібники" inputType="extended"
-                                        data={this.state.data.tutorial_rp}/>
+                            <InputField id="tutorial_rp" info="навчальні посібники" inputType="extended" data={this.state.data.tutorial_rp}/>
 
-                            <InputField id="other_edition_rp" info="інші наукові видання" inputType="extended"
-                                        data={this.state.data.other_edition_rp}
+                            <InputField id="other_edition_rp" info="інші наукові видання" inputType="extended" data={this.state.data.other_edition_rp}
                                         addInfo="словники, переклади наукових праць, наукові коментарі, бібліографічні покажчики тощо"/>
 
-                            <InputField id="article_impactor" info="статті у виданнях, які мають імпакт-фактор"
-                                        data={this.state.data.article_impactor}/>
+                            <InputField id="article_impactor" info="статті у виданнях, які мають імпакт-фактор" data={this.state.data.article_impactor}/>
 
                             <InputField id="article_wss" data={this.state.data.article_wss}
                                         info="статті в інших виданнях, які включені до міжнародних наукометричних баз даних Web of Science, Scopus"/>
@@ -550,10 +538,11 @@ class NewIR extends Component {
 
                             <InputField id="article_ukraine_other" data={this.state.data.article_ukraine_other}
                                         info="статті в інших виданнях України"/>
-                            <InputField id="theses_international" data={this.state.data.theses_ukraine}
+
+                            <InputField id="theses_ukraine" data={this.state.data.theses_ukraine}
                                         info="тези доповідей на міжнародних конференціях"/>
 
-                            <InputField id="theses_ukraine" data={this.state.data.theses_international}
+                            <InputField id="theses_international" data={this.state.data.theses_international}
                                         info="тези доповідей на вітчизняних конференціях"/>
 
                             <InputField id="international_conferences" data={this.state.data.international_conferences}
@@ -567,6 +556,7 @@ class NewIR extends Component {
                             <InputField id="textbook" info="підручники" data={this.state.data.textbook}/>
 
                             <InputField id="tutorial" info="навчальні посібники" data={this.state.data.tutorial}/>
+
                             <InputField id="other_edition" info="інші наукові видання"
                                         data={this.state.data.other_edition}
                                         addInfo="словники, переклади наукових праць, наукові коментарі, бібліографічні покажчики тощо"/>
@@ -593,13 +583,8 @@ class NewIR extends Component {
 
                             <InputField id="other_activity" data={this.state.data.other_activity}
                                         info="інші види діяльності"/>
-
-                            <InputTableRow id="create_date" title="Звіт заслухано" firstId="create_date"
-                                           secondId="protocol" topPadding={true}
+                            <InputTableRow id="create_date" title="Звіт заслухано" firstId="create_date" secondId="protocol" topPadding={true}
                                            firstColTitle="Дата засідання" secondColTitle="Номер протоколу"/>
-
-
-                            <button type="submit" className="login-btn">Зберегти</button>
                         </form>
                     </Col>
                 </div>

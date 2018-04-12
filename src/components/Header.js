@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import './Header.css';
 import {NavLink, withRouter} from 'react-router-dom';
-import {slide as Menu} from 'react-burger-menu';
+import { slide as Menu } from 'react-burger-menu';
 
 const Header = () => {
 
