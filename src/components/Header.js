@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import './Header.css';
 import {NavLink, withRouter} from 'react-router-dom';
-import { slide as Menu } from 'react-burger-menu';
+import {slide as Menu} from 'react-burger-menu';
 
 const Header = () => {
 
@@ -67,7 +67,7 @@ const Header = () => {
                             </NavLink></li>
 
                             <li className="menu-item center">
-                                <img alt="logo image" src="images/logo.png"/>
+                                <img alt="logo image" src="../images/logo.png"/>
                                 <div className="university-title">
                                     <span>львівський</span>
                                     <span>університет</span>
@@ -78,7 +78,7 @@ const Header = () => {
                                 <span>Профіль</span>
                             </NavLink></li>
                             <li className="menu-item"><a className="menu-item-link"
-                                                         href="https://localhost:8080/logout">
+                                                         href="../logout">
                                 {/*<li className="menu-item"><a className="menu-item-link" href="https://lnu.botscrew.com/logout">*/}
                                 <i className="fa fa-sign-out" aria-hidden="true"/>
                                 <span>Вихід</span>

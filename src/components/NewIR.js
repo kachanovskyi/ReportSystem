@@ -5,7 +5,6 @@ import {Col} from 'react-bootstrap';
 import {ifStringEmpty, ifNotEmptyArray, BASEURL} from '../externalFunctions';
 
 import NotifyModal from './NofityModal';
-
 import $ from 'jquery';
 
 import './NewIR.css';
@@ -53,6 +52,7 @@ class NewIR extends Component {
     }
 
     updateHeaderWithSubtitle = () => {
+        console.log("start creating header");
         let parent = document.createElement("div");
         parent.classList.add("parent-sub-title");
 
@@ -61,14 +61,19 @@ class NewIR extends Component {
         subT.classList.add("sub-title");
 
 
-        let buttons=document.createElement("div");
+        let buttons = document.createElement("div");
         buttons.classList.add("parent-save-download");
 
         let downloadBtn = document.createElement("button");
         downloadBtn.classList.add("save-btn");
-        downloadBtn.href="http://localhost:8080/report/download";
-        downloadBtn.target="_blank";
-        downloadBtn.innerHTML="Згенерувати pdf-файл";
+        downloadBtn.innerHTML = "Згенерувати pdf-файл";
+
+        let link = document.createElement("a");
+        link.href = `${BASEURL}report/download`;
+        // link.type = "application/pdf";
+        link.target = "_blank";
+
+        link.appendChild(downloadBtn);
 
         let submitBtn = document.createElement("button");
         submitBtn.innerHTML = "Зберегти звіт";
@@ -76,7 +81,7 @@ class NewIR extends Component {
         submitBtn.classList.add("save-btn");
         submitBtn.addEventListener("click", this.formSubmitted);
 
-        buttons.appendChild(downloadBtn);
+        buttons.appendChild(link);
         buttons.appendChild(submitBtn);
         parent.appendChild(subT);
         parent.appendChild(buttons);
@@ -84,6 +89,7 @@ class NewIR extends Component {
         document.getElementsByClassName("navbar navbar-default navbar-fixed-top")[0].appendChild(parent);
         document.getElementsByClassName("NewIR")[0].classList.add("shifted");
         document.getElementsByClassName("navbar navbar-default")[0].classList.add("no-overflow");
+        console.log("finish creating header");
     }
     //
     // reportDownload() {
@@ -122,7 +128,6 @@ class NewIR extends Component {
             .then((responseJson) => {
                 console.log(responseJson);
 
-                let subTitle;
                 for (let x in responseJson) {
                     let input = $(`#${x}`);
                     // console.log(x);
@@ -183,9 +188,44 @@ class NewIR extends Component {
                     }
 
                 }
+
                 this.setState({
-                    data,
-                    subTitle: "Індивідуальний звіт " + responseJson.user.name + " " + responseJson.user.lastName
+                    data
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+                console.log('new report');
+            });
+
+        fetch(`${BASEURL}user`, {
+            method: 'GET',
+            headers: myHeaders,
+            credentials: 'same-origin'
+        })
+        // fetch('./user.json')
+            .then((response) => response.json())
+            .then((responseJson) => {
+
+                let name;
+                let lastName;
+                console.log(responseJson);
+                for (let x in responseJson) {
+
+                    this.setState({
+                        [x]: responseJson[x]
+                    });
+                    if (x === "name") {
+                        name = responseJson[x];
+                    } else if (x === "lastName") {
+                        lastName = responseJson[x];
+                    } else if (x === "birthDate") {
+                        $('#birthDate').val(responseJson[x]);
+                    }
+
+                }
+                this.setState({
+                    subTitle: "Індивідуальний звіт " + lastName + " " + name+" ("+new Date().getFullYear()+")"
                 });
                 this.updateHeaderWithSubtitle();
                 this.loadScientificManager();
@@ -193,7 +233,6 @@ class NewIR extends Component {
             })
             .catch((error) => {
                 console.log(error);
-                console.log('new report');
             });
     }
 
@@ -206,7 +245,7 @@ class NewIR extends Component {
         fetch(`${BASEURL}all-themes/`, {
             method: 'GET',
             headers: myHeaders,
-            // credentials: 'same-origin'
+            credentials: 'same-origin'
         })
         // fetch('./scientificData.json')
             .then((response) => response.json())
@@ -247,7 +286,7 @@ class NewIR extends Component {
         fetch(`${BASEURL}theme`, {
             method: 'GET',
             headers: myHeaders,
-            // credentials: 'same-origin'
+            credentials: 'same-origin'
         })
         // fetch('./scientificData.json')
             .then((response) => response.json())
@@ -337,8 +376,6 @@ class NewIR extends Component {
                     if (lastIndex !== null) {
                         data[x].splice(lastIndex + 1);
                     }
-
-
                 }
                 // else {
                 //
@@ -397,7 +434,8 @@ class NewIR extends Component {
 
         }
 
-        // console.log(this.state.data);
+        console.log(JSON.stringify(self.state.data));
+
         fetch(`${BASEURL}report`, {
                 method: 'POST',
                 headers: myHeaders,
@@ -410,7 +448,7 @@ class NewIR extends Component {
                 // console.log(responseJson);
             })
             .catch((error) => {
-                // console.error(error);
+                console.error(error);
             });
 
         return false;
@@ -427,7 +465,7 @@ class NewIR extends Component {
                                 <h2 className="title">Науковий доробок</h2>
                                 {/*<a className="download-btn" href="https://lnu.botscrew.com/report/download" target="_blank">Завантажити звіт</a>*/}
                                 {/*<a className="download-btn" href="http://localhost:8080/report/download"*/}
-                                   {/*target="_blank">Завантажити звіт</a>*/}
+                                {/*target="_blank">Завантажити звіт</a>*/}
                             </div>
 
                             <InputField id="scientific_research_global" themes={this.state.themes_global}
@@ -463,9 +501,6 @@ class NewIR extends Component {
 
                             <h2 className="title">Публікації</h2>
 
-                            <InputField id="joint_publication"
-                                        info="спільні публікації зі студентами"/>
-
                             <InputTableRow title="Монографії" firstId="all_monographs_amount"
                                            secondId="monographs_amount" topPadding={true}/>
 
@@ -487,9 +522,6 @@ class NewIR extends Component {
 
 
                             <h2 className="title">Праці, що вийшли з друку за звітний період</h2>
-                            <p className="subtitle">
-                                бібліографічний опис згідно з державним стандартом
-                            </p>
 
                             <InputField id="monograph_rp" info="монографії" inputType="extended"
                                         data={this.state.data.monograph_rp}/>
@@ -518,11 +550,10 @@ class NewIR extends Component {
 
                             <InputField id="article_ukraine_other" data={this.state.data.article_ukraine_other}
                                         info="статті в інших виданнях України"/>
-
-                            <InputField id="theses_ukraine" data={this.state.data.theses_ukraine}
+                            <InputField id="theses_international" data={this.state.data.theses_ukraine}
                                         info="тези доповідей на міжнародних конференціях"/>
 
-                            <InputField id="theses_international" data={this.state.data.theses_international}
+                            <InputField id="theses_ukraine" data={this.state.data.theses_international}
                                         info="тези доповідей на вітчизняних конференціях"/>
 
                             <InputField id="international_conferences" data={this.state.data.international_conferences}
@@ -536,7 +567,6 @@ class NewIR extends Component {
                             <InputField id="textbook" info="підручники" data={this.state.data.textbook}/>
 
                             <InputField id="tutorial" info="навчальні посібники" data={this.state.data.tutorial}/>
-
                             <InputField id="other_edition" info="інші наукові видання"
                                         data={this.state.data.other_edition}
                                         addInfo="словники, переклади наукових праць, наукові коментарі, бібліографічні покажчики тощо"/>
@@ -564,11 +594,12 @@ class NewIR extends Component {
                             <InputField id="other_activity" data={this.state.data.other_activity}
                                         info="інші види діяльності"/>
 
-                            <InputTableRow title="Звіт заслухано" firstId="create_date" secondId="protocol"
-                                           topPadding={true}
+                            <InputTableRow id="create_date" title="Звіт заслухано" firstId="create_date"
+                                           secondId="protocol" topPadding={true}
                                            firstColTitle="Дата засідання" secondColTitle="Номер протоколу"/>
 
 
+                            <button type="submit" className="login-btn">Зберегти</button>
                         </form>
                     </Col>
                 </div>
