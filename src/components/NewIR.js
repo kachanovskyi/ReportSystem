@@ -463,49 +463,33 @@ class NewIR extends Component {
 
                             <h2 className="title">Публікації</h2>
 
-                            <InputField id="joint_publication"
-                                        info="спільні публікації зі студентами"/>
+                            <InputTableRow title="Монографії" firstId="all_monographs_amount" secondId="monographs_amount" topPadding={true}/>
 
-                            <InputTableRow title="Монографії" firstId="all_monographs_amount"
-                                           secondId="monographs_amount" topPadding={true}/>
+                            <InputTableRow title="Підручники" firstId="all_textbooks_amount" secondId="textbooks_amount"/>
 
-                            <InputTableRow title="Підручники" firstId="all_textbooks_amount"
-                                           secondId="textbooks_amount"/>
-
-                            <InputTableRow title="Навчальні посібники" firstId="all_tutorials_amount"
-                                           secondId="tutorials_amount"/>
+                            <InputTableRow title="Навчальні посібники" firstId="all_tutorials_amount" secondId="tutorials_amount"/>
 
                             <InputTableRow title="Статті" firstId="all_articles_amount" secondId="articles_amount"/>
 
-                            <InputTableRow title="Інші наукові видання" firstId="all_other_editions_amount"
-                                           secondId="other_editions_amount"/>
+                            <InputTableRow title="Інші наукові видання" firstId="all_other_editions_amount" secondId="other_editions_amount"/>
 
-                            <InputTableRow title="Тези доповідей на конференціях" firstId="all_theses_amount"
-                                           secondId="theses_amount"/>
+                            <InputTableRow title="Тези доповідей на конференціях" firstId="all_theses_amount" secondId="theses_amount"/>
 
                             <InputTableRow title="Патенти" firstId="all_patents_amount" secondId="patents_amount"/>
 
 
                             <h2 className="title">Праці, що вийшли з друку за звітний період</h2>
-                            <p className="subtitle">
-                                бібліографічний опис згідно з державним стандартом
-                            </p>
 
-                            <InputField id="monograph_rp" info="монографії" inputType="extended"
-                                        data={this.state.data.monograph_rp}/>
+                            <InputField id="monograph_rp" info="монографії" inputType="extended" data={this.state.data.monograph_rp}/>
 
-                            <InputField id="textbook_rp" info="підручники" inputType="extended"
-                                        data={this.state.data.textbook_rp}/>
+                            <InputField id="textbook_rp" info="підручники" inputType="extended" data={this.state.data.textbook_rp}/>
 
-                            <InputField id="tutorial_rp" info="навчальні посібники" inputType="extended"
-                                        data={this.state.data.tutorial_rp}/>
+                            <InputField id="tutorial_rp" info="навчальні посібники" inputType="extended" data={this.state.data.tutorial_rp}/>
 
-                            <InputField id="other_edition_rp" info="інші наукові видання" inputType="extended"
-                                        data={this.state.data.other_edition_rp}
+                            <InputField id="other_edition_rp" info="інші наукові видання" inputType="extended" data={this.state.data.other_edition_rp}
                                         addInfo="словники, переклади наукових праць, наукові коментарі, бібліографічні покажчики тощо"/>
 
-                            <InputField id="article_impactor" info="статті у виданнях, які мають імпакт-фактор"
-                                        data={this.state.data.article_impactor}/>
+                            <InputField id="article_impactor" info="статті у виданнях, які мають імпакт-фактор" data={this.state.data.article_impactor}/>
 
                             <InputField id="article_wss" data={this.state.data.article_wss}
                                         info="статті в інших виданнях, які включені до міжнародних наукометричних баз даних Web of Science, Scopus"/>
