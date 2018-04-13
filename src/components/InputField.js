@@ -18,9 +18,11 @@ class InputField extends Component {
                 backgroundImage: "url('images/arrow.png')",
                 backgroundPosition: "97% center",
                 backgroundRepeat: "no-repeat"
-            }
+            },
+            inputState: ''
         };
         this.addItem = this.addItem.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     addItem({target}) {
@@ -37,8 +39,8 @@ class InputField extends Component {
             parent = target.parent().parent().parent();
         if (id === "scientific_research" || id === "scientific_research_global") {
 
-            clone = parent.find($('.data-input').filter(function(){
-                return $(this).attr("id")===id;
+            clone = parent.find($('.data-input').filter(function () {
+                return $(this).attr("id") === id;
             })[0]).clone().removeClass('default');
             clone.find('.delete-icon').on("click", function () {
                 $(this).parent().remove();
@@ -66,6 +68,13 @@ class InputField extends Component {
             );
 
         }
+    };
+
+    handleChange = (event) => {
+        this.setState({ inputState: event.target.value.replace(/[^\d.,]/g, '')             // numbers and decimals only
+                    .replace(/(^[\d]{4})[\d]/, '$1')   // not more than 4 digits at the beginning
+                    .replace(/([.,].*)[.,]/, '$1')         // decimal can’t exist more than once
+                    .replace(/([.,][\d])./, '$1') });
     };
 
     render() {
@@ -133,37 +142,44 @@ class InputField extends Component {
                         <div className={index ? "data-input extended" : "data-input default extended"} key={index}>
                             <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
                             <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)" defaultValue={item.value}/>
-                            <input type="number" step="0.1" min="0" className="pages" placeholder="Обсяг. друк. арк."
+                            <input type="number" onKeyPress={this.checkForPattern} pattern="^[+-]?([0-9]*[.])?[0-9]+$"
+                                   step="0.1" min="0" className="pages" placeholder="Обсяг. друк. арк. автора"
                                    defaultValue={item.pages}/>
                         </div>
                     );
                 });
-            } else if(this.props.inputType === "extended") {
+            } else if (this.props.inputType === "extended") {
                 content = <div className="data-input default extended">
                     <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
                     <textarea placeholder="Бібліографічний опис згідно з державним стандартом (до 1000 знаків)"/>
-                    <input type="number" step="0.1" min="0" className="pages" placeholder="Обсяг друк. арк. автора"/>
+                    <input type="text" value={this.state.inputState} onChange={this.handleChange} step="0.1" min="0"
+                           className="pages"
+                           placeholder="Обсяг друк. арк. автора"/>
                 </div>
 
-            } else if( this.props.data && ifNotEmptyArray(this.props.data) ) {
+            } else if (this.props.data && ifNotEmptyArray(this.props.data)) {
 
                 if (this.props.id === "article_impactor" || this.props.id === "article_wss" || this.props.id === "article_international"
-                        || this.props.id === "article_ukraine" || this.props.id === "article_ukraine_other" || this.props.id === "theses_ukraine"
-                        || this.props.id === "theses_international") {
+                    || this.props.id === "article_ukraine" || this.props.id === "article_ukraine_other" || this.props.id === "theses_ukraine"
+                    || this.props.id === "theses_international") {
                     content = this.props.data.map((item, index) => {
                         return (
                             <div className={index ? "data-input" : "data-input default"} key={index}>
                                 <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
-                                    <textarea key={index} placeholder="Бібліографічний опис згідно з державним стандартом (до 1000 знаків)" defaultValue={item.value}/>
+                                <textarea key={index}
+                                          placeholder="Бібліографічний опис згідно з державним стандартом (до 1000 знаків)"
+                                          defaultValue={item.value}/>
                             </div>
                         );
                     });
-                } else if (this.props.id === "international_conferences"){
+                } else if (this.props.id === "international_conferences") {
                     content = this.props.data.map((item, index) => {
                         return (
                             <div className={index ? "data-input" : "data-input default"} key={index}>
                                 <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
-                                <textarea key={index} placeholder="Назва конференції, час та місце проведення (до 1000 знаків)" defaultValue={item.value}/>
+                                <textarea key={index}
+                                          placeholder="Назва конференції, час та місце проведення (до 1000 знаків)"
+                                          defaultValue={item.value}/>
                             </div>
                         );
                     });
@@ -173,7 +189,8 @@ class InputField extends Component {
                         return (
                             <div className={index ? "data-input" : "data-input default"} key={index}>
                                 <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
-                                <textarea key={index} placeholder="Зміст виконаної роботи (до 1000 знаків)" defaultValue={item.value}/>
+                                <textarea key={index} placeholder="Зміст виконаної роботи (до 1000 знаків)"
+                                          defaultValue={item.value}/>
                             </div>
                         );
                     });
@@ -181,18 +198,18 @@ class InputField extends Component {
 
             } else {
                 if (this.props.id === "article_impactor" || this.props.id === "article_wss" || this.props.id === "article_international"
-                        || this.props.id === "article_ukraine" || this.props.id === "article_ukraine_other" || this.props.id === "theses_ukraine"
-                        || this.props.id === "theses_international") {
+                    || this.props.id === "article_ukraine" || this.props.id === "article_ukraine_other" || this.props.id === "theses_ukraine"
+                    || this.props.id === "theses_international") {
                     content = <div className="data-input default">
                         <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
                         <textarea placeholder="Бібліографічний опис згідно з державним стандартом (до 1000 знаків)"/>
                     </div>
-                    } else if ( this.props.id === "international_conferences") {
-                        content = <div className="data-input default">
-                            <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
-                                <textarea placeholder="Назва конференції, час та місце проведення (до 1000 знаків)"/>
-                            </div>
-                    } else {
+                } else if (this.props.id === "international_conferences") {
+                    content = <div className="data-input default">
+                        <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
+                        <textarea placeholder="Назва конференції, час та місце проведення (до 1000 знаків)"/>
+                    </div>
+                } else {
                     content = <div className="data-input default">
                         <span className="delete-icon" onClick={InputField.removeItem}>&#10005;</span>
                         <textarea placeholder="Зміст виконаної роботи (до 1000 знаків)"/>
